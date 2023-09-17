@@ -1,0 +1,51 @@
+<resources>
+
+        <string name="app_name">chall3</string>
+        <string name="hello_binarian">Hello Binarian,</string>
+        <string name="feeling_hungry">Feeling hungry?</string>
+        <string name="for_you">For you:</string>
+        <string name="account_image">Account Image</string>
+        <string name="cart_image">Cart Image</string>
+        <string name="discount_30">Discount 30%</string>
+        <string name="order_now">Order now and get your dream food!</string>
+        <string name="banner_image">Banner Image</string>
+        <string name="food_image">Food Image</string>
+        <string name="category">Category:</string>
+        <string name="_10_000">10.000</string>
+
+        <string-array name="data_name">
+            <item>Burger</item>
+            <item>Pizza</item>
+            <item>Salad</item>
+            <item>Soto</item>
+            <item>Bakso</item>
+            <item>Mie</item>
+            <item>Jus</item>
+            <item>Satay</item>
+        </string-array>
+
+        <string-array name="data_price">
+            <item>10.000</item>
+            <item>15.000</item>
+            <item>20.000</item>
+            <item>15.000</item>
+            <item>10.000</item>
+            <item>5.000</item>
+            <item>15.000</item>
+            <item>20.000</item>
+        </string-array>
+
+        <integer-array name="data_photo">
+            <item>@drawable/burger</item>
+            <item>@drawable/pizza</item>
+            <item>@drawable/salad</item>
+            <item>@drawable/soto</item>
+            <item>@drawable/bakso</item>
+            <item>@drawable/mie</item>
+            <item>@drawable/jus</item>
+            <item>@drawable/satay</item>
+        </integer-array>
+        <!-- TODO: Remove or change this placeholder text -->
+        <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
