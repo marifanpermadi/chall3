@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +15,7 @@
             android:id="@+id/iv_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/lighter_magenta"
+            android:background="@color/light_magenta"
             android:importantForAccessibility="no"
             android:src="@drawable/burger"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,8 +24,8 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:importantForAccessibility="no"
@@ -40,7 +41,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/burger"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_image" />
@@ -52,10 +53,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="@string/price"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tv_food_price"
+            app:layout_constraintTop_toTopOf="@id/tv_food_price"/>
 
         <TextView
             android:id="@+id/tv_desc"
@@ -71,7 +81,8 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
+            app:dividerColor="@color/light_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_desc" />
@@ -81,7 +92,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_store"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:text="@string/location"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_store"
             app:layout_constraintStart_toEndOf="@id/iv_store" />
@@ -111,10 +122,11 @@
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="80dp"
+            app:dividerColor="@color/light_grey"
             app:layout_constraintBottom_toTopOf="@id/bt_cart"
-            android:layout_marginBottom="80dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bt_cart"
@@ -180,7 +192,8 @@
             app:layout_constraintBottom_toTopOf="@id/bt_cart"
             app:layout_constraintEnd_toEndOf="@id/bt_cart"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
-            app:strokeColor="@color/black"
+            app:strokeColor="@color/light_magenta"
+            app:strokeWidth="2dp"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
@@ -217,7 +230,8 @@
             app:layout_constraintBottom_toTopOf="@id/bt_cart"
             app:layout_constraintEnd_toStartOf="@id/tv_number"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
-            app:strokeColor="@color/black"
+            app:strokeColor="@color/light_magenta"
+            app:strokeWidth="2dp"
             tools:ignore="TouchTargetSizeCheck" />
 
 

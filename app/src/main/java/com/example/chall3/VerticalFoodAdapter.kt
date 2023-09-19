@@ -1,5 +1,6 @@
 package com.example.chall3
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class VerticalFoodAdapter(
     private val listFood: ArrayList<Foods>,
-    private val isGridMode: Boolean = true
+    private val isGridMode: Boolean = true,
+    var onItemClick: ((Foods) -> Unit)? = null
 ) : RecyclerView.Adapter<VerticalFoodAdapter.ListViewHolder>() {
 
-    var onItemClick: ((Foods) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutResId = if (isGridMode) R.layout.item_vertical else R.layout.item_vertical_linear
@@ -24,15 +26,16 @@ class VerticalFoodAdapter(
     override fun getItemCount(): Int = listFood.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (name, price, photo) = listFood[position]
+        val (name, price, photo, _) = listFood[position]
         holder.imgPhoto.setImageResource(photo)
         holder.imgName.text = name
-        holder.price.text = price
+        holder.price.text = price.toString()
 
         val currentItem = listFood[position]
 
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(currentItem)
+            Log.d("ItemClicked", "Item clicked")
         }
     }
 

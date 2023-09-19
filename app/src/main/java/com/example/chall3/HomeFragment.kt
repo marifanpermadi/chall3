@@ -2,6 +2,7 @@ package com.example.chall3
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,25 +47,40 @@ class HomeFragment : Fragment() {
             toggleImageViewImage(toggleImage)
         }
 
-        val adapter = VerticalFoodAdapter(listVertical)
-        adapter.onItemClick = { item ->
-            //val fragment = DetailFragment.newInstance(item)
-        }
+        val adapter = VerticalFoodAdapter(listVertical, isListView, onItemClick = {
+            val fragment = DetailFragment.newInstance(it)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, fragment)
+                .addToBackStack(null)
+                .commit()
+        })
+        /*adapter.onItemClick = { item ->
+
+            val fragment = DetailFragment.newInstance(item)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, fragment)
+                .addToBackStack(null)
+                .commit()
+        }*/
+        binding.rvVertical.adapter = adapter
 
         return binding.root
     }
 
-    @SuppressLint("Recycle")
     private fun getListFoodsHorizontal(): ArrayList<Foods> {
         val dataName = resources.getStringArray(R.array.data_name)
-        val dataPrice = resources.getStringArray(R.array.data_price)
+        val dataPrice = resources.getIntArray(R.array.data_price)
+        val dataDesc = resources.getStringArray(R.array.data_description)
         val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
 
         val listFood = ArrayList<Foods>()
         for (i in dataName.indices) {
-            val food = Foods(dataName[i], dataPrice[i], dataPhoto.getResourceId(i, -1))
+            val food = Foods(dataName[i], dataPrice[i], dataPhoto.getResourceId(i, -1), dataDesc[i])
             listFood.add(food)
         }
+
+        dataPhoto.recycle()
+
         return listFood
     }
 
@@ -75,17 +91,20 @@ class HomeFragment : Fragment() {
         binding.rvHorizontal.adapter = listFoodAdapter
     }
 
-    @SuppressLint("Recycle")
     private fun getListFoodsVertical(): ArrayList<Foods> {
         val dataName = resources.getStringArray(R.array.data_name)
-        val dataPrice = resources.getStringArray(R.array.data_price)
+        val dataPrice = resources.getIntArray(R.array.data_price)
+        val dataDesc = resources.getStringArray(R.array.data_description)
         val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
 
         val listFood = ArrayList<Foods>()
         for (i in dataName.indices) {
-            val food = Foods(dataName[i], dataPrice[i], dataPhoto.getResourceId(i, -1))
+            val food = Foods(dataName[i], dataPrice[i], dataPhoto.getResourceId(i, -1), dataDesc[i])
             listFood.add(food)
         }
+
+        dataPhoto.recycle()
+
         return listFood
     }
 
