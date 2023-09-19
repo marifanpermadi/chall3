@@ -46,6 +46,11 @@ class HomeFragment : Fragment() {
             toggleImageViewImage(toggleImage)
         }
 
+        val adapter = VerticalFoodAdapter(listVertical)
+        adapter.onItemClick = { item ->
+            //val fragment = DetailFragment.newInstance(item)
+        }
+
         return binding.root
     }
 

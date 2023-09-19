@@ -12,6 +12,7 @@ class VerticalFoodAdapter(
     private val isGridMode: Boolean = true
 ) : RecyclerView.Adapter<VerticalFoodAdapter.ListViewHolder>() {
 
+    var onItemClick: ((Foods) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutResId = if (isGridMode) R.layout.item_vertical else R.layout.item_vertical_linear
@@ -27,6 +28,12 @@ class VerticalFoodAdapter(
         holder.imgPhoto.setImageResource(photo)
         holder.imgName.text = name
         holder.price.text = price
+
+        val currentItem = listFood[position]
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(currentItem)
+        }
     }
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
