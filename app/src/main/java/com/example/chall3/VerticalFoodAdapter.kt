@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 class VerticalFoodAdapter(
     private val listFood: ArrayList<Foods>,
-    private val isGridMode: Boolean = true,
-    var onItemClick: ((Foods) -> Unit)? = null
+    var isGridMode: Boolean = true,
+    private var onItemClick: ((Foods) -> Unit)? = null
 ) : RecyclerView.Adapter<VerticalFoodAdapter.ListViewHolder>() {
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutResId = if (isGridMode) R.layout.item_vertical else R.layout.item_vertical_linear
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)
         return ListViewHolder(view)
     }
 
@@ -32,10 +30,8 @@ class VerticalFoodAdapter(
         holder.price.text = price.toString()
 
         val currentItem = listFood[position]
-
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(currentItem)
-            Log.d("ItemClicked", "Item clicked")
         }
     }
 
@@ -45,6 +41,5 @@ class VerticalFoodAdapter(
         val imgName: TextView = itemView.findViewById(R.id.tv_desc)
 
     }
-
 
 }

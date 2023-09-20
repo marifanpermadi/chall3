@@ -30,6 +30,4 @@ class HorizontalFoodAdapter(
         val imgPhoto: ImageView = itemView.findViewById(R.id.iv_food)
         val imgName: TextView = itemView.findViewById(R.id.tv_desc)
     }
-
-
 }

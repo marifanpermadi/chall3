@@ -1,12 +1,13 @@
 package com.example.chall3
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.chall3.databinding.FragmentDetailBinding
-import com.example.chall3.databinding.FragmentHomeBinding
 
 
 class DetailFragment : Fragment() {
@@ -19,27 +20,26 @@ class DetailFragment : Fragment() {
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
 
-        val item = arguments?.getParcelable<Foods>("item")
+        setData()
+        onBackPressed()
 
+        return binding.root
+    }
+
+    private fun setData() {
+        @Suppress("DEPRECATION") val item = arguments?.getParcelable<Foods>("item")
         item?.let {
             binding.ivImage.setImageResource(it.photo)
             binding.tvFoodPrice.text = item.price.toString()
             binding.tvFoodName.text = item.name
             binding.tvDesc.text = item.description
         }
-
-
-        return binding.root
     }
 
-    companion object {
-        fun newInstance(item: Foods): DetailFragment {
-            val fragment = DetailFragment()
-            val args = Bundle()
-            args.putParcelable("item", item)
-            fragment.arguments = args
-            return fragment
-        }
+    private fun onBackPressed() {
+        requireActivity()
+            .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                findNavController().navigate(R.id.homeFragment)
+            }
     }
-
 }

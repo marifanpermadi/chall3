@@ -20,7 +20,8 @@
             android:src="@drawable/burger"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/iv_back"
@@ -106,7 +107,7 @@
             android:text="@string/location"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/iv_store"
+            app:layout_constraintTop_toTopOf="@id/iv_store"
             app:layout_constraintStart_toEndOf="@id/iv_store" />
 
         <TextView
@@ -203,7 +204,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
             android:text="@string/_1"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/bt_cart"
             app:layout_constraintEnd_toStartOf="@id/bt_plus"

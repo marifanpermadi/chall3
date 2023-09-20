@@ -2,19 +2,23 @@ package com.example.chall3
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.addCallback
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding : FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var verticalFoodAdapter: VerticalFoodAdapter
 
     private val listHorizontal = ArrayList<Foods>()
     private val listVertical = ArrayList<Foods>()
@@ -40,29 +44,9 @@ class HomeFragment : Fragment() {
         listVertical.addAll(getListFoodsVertical())
         showRecyclerListVertical()
 
-        val toggleImage = binding.ivToggle
-        toggleImage.setOnClickListener {
-            isListView = !isListView
-            toggleRecyclerViewLayout()
-            toggleImageViewImage(toggleImage)
-        }
-
-        val adapter = VerticalFoodAdapter(listVertical, isListView, onItemClick = {
-            val fragment = DetailFragment.newInstance(it)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, fragment)
-                .addToBackStack(null)
-                .commit()
-        })
-        /*adapter.onItemClick = { item ->
-
-            val fragment = DetailFragment.newInstance(item)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, fragment)
-                .addToBackStack(null)
-                .commit()
-        }*/
-        binding.rvVertical.adapter = adapter
+        toggleLayout()
+        itemClicked()
+        onBackPressed()
 
         return binding.root
     }
@@ -121,6 +105,7 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun toggleRecyclerViewLayout() {
+        isListView = !isListView
 
         if (isListView) {
             showGrid()
@@ -134,14 +119,45 @@ class HomeFragment : Fragment() {
     private fun showGrid() {
         binding.rvVertical.layoutManager =
             GridLayoutManager(requireActivity(), 2)
-        val listFoodAdapter = VerticalFoodAdapter(listVertical, isGridMode = true)
-        binding.rvVertical.adapter = listFoodAdapter
+        verticalFoodAdapter.isGridMode = true
+        binding.rvVertical.adapter = verticalFoodAdapter
     }
 
     private fun showLinear() {
         binding.rvVertical.layoutManager =
             LinearLayoutManager(requireActivity())
-        val listFoodAdapter = VerticalFoodAdapter(listVertical, isGridMode = false)
-        binding.rvVertical.adapter = listFoodAdapter
+        verticalFoodAdapter.isGridMode = false
+        binding.rvVertical.adapter = verticalFoodAdapter
+    }
+
+    private fun toggleLayout() {
+        val toggleImage = binding.ivToggle
+        toggleImage.setOnClickListener {
+            toggleRecyclerViewLayout()
+            toggleImageViewImage(toggleImage)
+        }
+    }
+
+    private fun itemClicked() {
+        val navController = findNavController()
+        val onItemClick: (Foods) -> Unit = { item ->
+            val bundle = bundleOf("item" to item)
+            navController.navigate(R.id.detailFragment, bundle)
+        }
+
+        verticalFoodAdapter = VerticalFoodAdapter(listVertical, isListView, onItemClick)
+        binding.rvVertical.adapter = verticalFoodAdapter
+    }
+
+    private fun onBackPressed() {
+        val navController = findNavController()
+        requireActivity()
+            .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                if (navController.currentDestination?.id == R.id.homeFragment) {
+                    requireActivity().finish()
+                } else {
+                    navController.navigateUp()
+                }
+            }
     }
 }
