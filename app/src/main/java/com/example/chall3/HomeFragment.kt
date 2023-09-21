@@ -56,10 +56,17 @@ class HomeFragment : Fragment() {
         val dataPrice = resources.getIntArray(R.array.data_price)
         val dataDesc = resources.getStringArray(R.array.data_description)
         val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
+        val dataStar = resources.getStringArray(R.array.data_star)
 
         val listFood = ArrayList<Foods>()
         for (i in dataName.indices) {
-            val food = Foods(dataName[i], dataPrice[i], dataPhoto.getResourceId(i, -1), dataDesc[i])
+            val food = Foods(
+                dataName[i],
+                dataPrice[i],
+                dataPhoto.getResourceId(i, -1),
+                dataDesc[i],
+                dataStar[i]
+            )
             listFood.add(food)
         }
 
@@ -80,10 +87,17 @@ class HomeFragment : Fragment() {
         val dataPrice = resources.getIntArray(R.array.data_price)
         val dataDesc = resources.getStringArray(R.array.data_description)
         val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
+        val dataStar = resources.getStringArray(R.array.data_star)
 
         val listFood = ArrayList<Foods>()
         for (i in dataName.indices) {
-            val food = Foods(dataName[i], dataPrice[i], dataPhoto.getResourceId(i, -1), dataDesc[i])
+            val food = Foods(
+                dataName[i],
+                dataPrice[i],
+                dataPhoto.getResourceId(i, -1),
+                dataDesc[i],
+                dataStar[i]
+            )
             listFood.add(food)
         }
 

@@ -6,8 +6,7 @@
     <string name="for_you">For you:</string>
     <string name="account_image">Account Image</string>
     <string name="cart_image">Cart Image</string>
-    <string name="discount_30">Discount 30%</string>
-    <string name="order_now">Order now and get your dream food!</string>
+    <string name="order_now">Treat yourself with the best deal!</string>
     <string name="banner_image">Banner Image</string>
     <string name="food_image">Food Image</string>
     <string name="category">Category:</string>
@@ -19,8 +18,8 @@
         <item>Salad</item>
         <item>Soto</item>
         <item>Bakso</item>
-        <item>Mie</item>
-        <item>Jus</item>
+        <item>Noodle</item>
+        <item>Juice</item>
         <item>Satay</item>
     </string-array>
 
@@ -41,7 +40,7 @@
         <item>@drawable/salad</item>
         <item>@drawable/soto</item>
         <item>@drawable/bakso</item>
-        <item>@drawable/mie</item>
+        <item>@drawable/noodle</item>
         <item>@drawable/jus</item>
         <item>@drawable/satay</item>
     </integer-array>
@@ -57,6 +56,17 @@
         <item>A beloved Indonesian delight, showcases succulent skewered meats, marinated to perfection and grilled over open flames, while bathed in a fragrant peanut sauce, creating a tantalizing fusion of smoky, sweet, and savory flavors that transport your taste buds to exotic destinations</item>
     </string-array>
 
+    <string-array name="data_star">
+        <item>4.8</item>
+        <item>4.7</item>
+        <item>4.9</item>
+        <item>4.4</item>
+        <item>4.5</item>
+        <item>4.8</item>
+        <item>4.6</item>
+        <item>5.0</item>
+    </string-array>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="burger">Burger</string>
     <string name="price">Price</string>
@@ -69,5 +79,8 @@
     <string name="add">+</string>
     <string name="_1">1</string>
     <string name="minus">-</string>
+    <string name="free_delivery">FREE DELIVERY!</string>
+    <string name="order">Order now</string>
+    <string name="_4_8">4.8</string>
 
 </resources>

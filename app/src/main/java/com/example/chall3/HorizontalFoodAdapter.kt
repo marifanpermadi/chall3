@@ -21,9 +21,10 @@ class HorizontalFoodAdapter(
     override fun getItemCount(): Int = listFood.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (name, _, photo) = listFood[position]
+        val (name, _, photo, _, _) = listFood[position]
         holder.imgPhoto.setImageResource(photo)
         holder.imgName.text = name
+
     }
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

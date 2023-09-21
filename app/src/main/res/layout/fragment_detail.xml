@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -66,7 +65,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tv_food_price"
-            app:layout_constraintTop_toTopOf="@id/tv_food_price"/>
+            app:layout_constraintTop_toTopOf="@id/tv_food_price" />
 
         <TextView
             android:id="@+id/tv_desc"
@@ -107,8 +106,8 @@
             android:text="@string/location"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="@id/iv_store"
-            app:layout_constraintStart_toEndOf="@id/iv_store" />
+            app:layout_constraintStart_toEndOf="@id/iv_store"
+            app:layout_constraintTop_toTopOf="@id/iv_store" />
 
         <TextView
             android:id="@+id/tv_location_desc"
