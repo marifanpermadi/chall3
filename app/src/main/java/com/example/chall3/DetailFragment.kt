@@ -1,5 +1,7 @@
 package com.example.chall3
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,7 @@ class DetailFragment : Fragment() {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
 
         setData()
+        seeOnMaps()
         onBackPressed()
 
         return binding.root
@@ -33,6 +36,9 @@ class DetailFragment : Fragment() {
             binding.tvFoodPrice.text = item.price.toString()
             binding.tvFoodName.text = item.name
             binding.tvDesc.text = item.description
+            binding.btStar.text = item.star
+            binding.tvLocationDesc.text = item.address
+            binding.tvTotal.text = item.price.toString()
         }
     }
 
@@ -41,5 +47,15 @@ class DetailFragment : Fragment() {
             .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
                 findNavController().navigate(R.id.homeFragment)
             }
+    }
+
+    private fun seeOnMaps() {
+        @Suppress("DEPRECATION") val item = arguments?.getParcelable<Foods>("item")
+        binding.btMaps.setOnClickListener {
+            val address = item?.address
+            val map = "http://maps.google.co.in/maps?q=$address"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(map))
+            startActivity(intent)
+        }
     }
 }

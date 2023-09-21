@@ -67,6 +67,17 @@
         <item>5.0</item>
     </string-array>
 
+    <string-array name="data_address">
+        <item>Jl. Kemang Raya No.77, RT.4/RW.2, Bangka, Kec. Mampang Prpt., Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12730</item>
+        <item>Jl. M.H. Thamrin No.28 – 30, RT.9/RW.5, Gondangdia, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10350</item>
+        <item>Jl. M.H. Thamrin No.1, Kb. Melati, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10230</item>
+        <item>Ps. Slipi, Jl. Anggrek Garuda D/I No.4, RT.4/RW.2, Kemanggisan, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11480</item>
+        <item>Jl. Aip II Karel Sat-Suit Tubun IIB No.5A, RT.7/RW.2, Slipi, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11410</item>
+        <item>Jl. Tanjung Duren Raya No.135a, Tj. Duren Sel., Kec. Grogol petamburan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11470</item>
+        <item>Taman S. Parman No.3, RT.6/RW.16, Tomang, Kec. Grogol petamburan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11440</item>
+        <item>Jl. Kembangan Raya No.24, RT.1/RW.2, Kembangan Sel., Kec. Kembangan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11610</item>
+    </string-array>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="burger">Burger</string>
     <string name="price">Price</string>
@@ -75,12 +86,13 @@
     <string name="location_description">Location Description</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="total">Total</string>
-    <string name="rp">Rp.</string>
+    <string name="rp">rp.</string>
     <string name="add">+</string>
     <string name="_1">1</string>
     <string name="minus">-</string>
     <string name="free_delivery">FREE DELIVERY!</string>
     <string name="order">Order now</string>
     <string name="_4_8">4.8</string>
+    <string name="see_on_map">See on map</string>
 
 </resources>

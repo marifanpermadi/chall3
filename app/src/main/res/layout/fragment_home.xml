@@ -96,7 +96,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/free_delivery"
-                android:textColor="@color/light_magenta"
+                android:textColor="@color/orange_dark"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:backgroundTint="@color/white"
@@ -110,9 +110,11 @@
                 android:id="@+id/tv_get"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="@string/order_now"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/tv_discount"
                 app:layout_constraintStart_toStartOf="@id/tv_discount"
                 app:layout_constraintTop_toBottomOf="@id/tv_discount"
                 tools:ignore="TextSizeCheck" />
@@ -122,7 +124,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/order"
                 android:textColor="@color/white"
                 app:cornerRadius="8dp"
@@ -151,7 +153,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_horizontal"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="85dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +177,8 @@
         android:importantForAccessibility="no"
         android:src="@drawable/ic_list"
         app:layout_constraintEnd_toEndOf="@id/cv_banner"
-        app:layout_constraintTop_toTopOf="@id/tv_for" />
+        app:layout_constraintTop_toTopOf="@id/tv_for"
+        app:tint="@color/orange_dark" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_vertical"
