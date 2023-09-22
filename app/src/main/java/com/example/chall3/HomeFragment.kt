@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -46,7 +45,6 @@ class HomeFragment : Fragment() {
 
         toggleLayout()
         itemClicked()
-        onBackPressed()
 
         return binding.root
     }
@@ -157,25 +155,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun itemClicked() {
+
         val navController = findNavController()
         val onItemClick: (Foods) -> Unit = { item ->
             val bundle = bundleOf("item" to item)
-            navController.navigate(R.id.detailFragment, bundle)
+            navController.navigate(R.id.action_homeFragment_to_detailFragment, bundle)
         }
 
         verticalFoodAdapter = VerticalFoodAdapter(listVertical, isListView, onItemClick)
         binding.rvVertical.adapter = verticalFoodAdapter
     }
 
-    private fun onBackPressed() {
-        val navController = findNavController()
-        requireActivity()
-            .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                if (navController.currentDestination?.id == R.id.homeFragment) {
-                    requireActivity().finish()
-                } else {
-                    navController.navigateUp()
-                }
-            }
-    }
 }

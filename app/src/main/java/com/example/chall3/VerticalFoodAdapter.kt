@@ -24,6 +24,7 @@ class VerticalFoodAdapter(
     override fun getItemCount(): Int = listFood.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+
         val (name, price, photo, _, star) = listFood[position]
         holder.imgPhoto.setImageResource(photo)
         holder.imgName.text = name
@@ -34,6 +35,7 @@ class VerticalFoodAdapter(
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(currentItem)
         }
+
     }
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
