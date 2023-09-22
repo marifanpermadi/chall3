@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_yellow"
-    tools:context=".DetailFragment">
+    tools:context=".ui.fragment.DetailFragment"
+    tools:ignore="Overdraw">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -63,8 +64,8 @@
             android:id="@+id/iv_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"

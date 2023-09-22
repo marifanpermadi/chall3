@@ -1,4 +1,4 @@
-package com.example.chall3
+package com.example.chall3.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chall3.R
+import com.example.chall3.model.Foods
 
 class HorizontalFoodAdapter(
     private val listFood: ArrayList<Foods>

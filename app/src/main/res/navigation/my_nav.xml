@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.chall3.HomeFragment"
+        android:name="com.example.chall3.ui.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.chall3.DetailFragment"
+        android:name="com.example.chall3.ui.fragment.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
 
