@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.chall3.model.Foods
@@ -33,7 +32,7 @@ class DetailFragment : Fragment() {
         seeOnMaps()
         setAddition()
         setReduction()
-        onBackPressed()
+        //onBackPressed()
         iconBackClicked()
 
         return binding.root
@@ -93,12 +92,12 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun onBackPressed() {
+    /*private fun onBackPressed() {
         requireActivity()
             .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
                 findNavController().navigate(R.id.homeFragment)
             }
-    }
+    }*/
 
     private fun iconBackClicked() {
         binding.ivBack.setOnClickListener {

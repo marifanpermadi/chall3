@@ -41,11 +41,15 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.rvHorizontal.setHasFixedSize(true)
-        listHorizontal.addAll(getListFoodsHorizontal())
+        if (listHorizontal.isEmpty()) {
+            listHorizontal.addAll(getListFoodsHorizontal())
+        }
         showRecyclerListHorizontal()
 
         binding.rvVertical.setHasFixedSize(true)
-        listVertical.addAll(getListFoodsVertical())
+        if (listVertical.isEmpty()) {
+            listVertical.addAll(getListFoodsVertical())
+        }
         showRecyclerListVertical()
 
         toggleLayout()
