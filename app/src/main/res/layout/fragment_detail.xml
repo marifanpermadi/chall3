@@ -186,8 +186,8 @@
 
                 <ImageView
                     android:id="@+id/bt_maps"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginBottom="15dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/baseline_location_on_24"
@@ -202,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginStart="12dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="12dp"
                     android:layout_marginBottom="12dp"
                     app:dividerColor="@color/light_grey"
                     app:layout_constraintBottom_toTopOf="@id/bt_plus"

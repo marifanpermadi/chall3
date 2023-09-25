@@ -94,5 +94,10 @@
     <string name="order">Order now</string>
     <string name="_4_8">4.8</string>
     <string name="see_on_map">See on map</string>
+    <string name="home_fragment">Home</string>
+    <string name="cart_fragment">Cart</string>
+    <string name="profile_fragment">Profile</string>
+    <string name="this_profile_fragment">Profile fragment</string>
+    <string name="this_cart_fragment">Cart fragment</string>
 
 </resources>
