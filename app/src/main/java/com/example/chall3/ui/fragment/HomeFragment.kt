@@ -19,16 +19,13 @@ import com.example.chall3.adapter.VerticalFoodAdapter
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.HomeViewModel
-import com.example.utils.UserPreferences
+import com.example.chall3.utils.UserPreferences
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-
     private lateinit var homeViewModel: HomeViewModel
-
     private lateinit var userPreferences: UserPreferences
-
     private lateinit var verticalFoodAdapter: VerticalFoodAdapter
 
     private val listHorizontal = ArrayList<Foods>()

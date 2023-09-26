@@ -1,4 +1,4 @@
-package com.example.utils
+package com.example.chall3.utils
 
 import android.content.Context
 import android.content.SharedPreferences
