@@ -1,5 +1,6 @@
 package com.example.chall3.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ class VerticalFoodAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val layoutResId = if (isGridMode) R.layout.item_vertical else R.layout.item_vertical_linear
+        val layoutResId = if (isGridMode) R.layout.item_vertical_grid else R.layout.item_vertical_linear
         val view: View = LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)
         return ListViewHolder(view)
     }
@@ -46,6 +47,13 @@ class VerticalFoodAdapter(
         val imgName: TextView = itemView.findViewById(R.id.tv_desc)
         val imgStar: MaterialButton = itemView.findViewById(R.id.bt_star)
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newData: ArrayList<Foods>) {
+        listFood.clear()
+        listFood.addAll(newData)
+        notifyDataSetChanged()
     }
 
 }

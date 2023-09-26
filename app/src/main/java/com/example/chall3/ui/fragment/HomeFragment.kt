@@ -2,43 +2,53 @@ package com.example.chall3.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chall3.model.Foods
-import com.example.chall3.adapter.HorizontalFoodAdapter
 import com.example.chall3.R
+import com.example.chall3.adapter.HorizontalFoodAdapter
 import com.example.chall3.adapter.VerticalFoodAdapter
 import com.example.chall3.databinding.FragmentHomeBinding
+import com.example.chall3.model.Foods
+import com.example.chall3.viewmodel.HomeViewModel
+import com.example.utils.UserPreferences
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var homeViewModel: HomeViewModel
+
+    private lateinit var userPreferences: UserPreferences
 
     private lateinit var verticalFoodAdapter: VerticalFoodAdapter
 
     private val listHorizontal = ArrayList<Foods>()
     private val listVertical = ArrayList<Foods>()
 
-    private var isListView = true
-    private val listLayout = arrayOf(
-        R.drawable.ic_list,
-        R.drawable.ic_grid
-    )
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        userPreferences = UserPreferences(requireContext())
+
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
+
+        verticalFoodAdapter =
+            VerticalFoodAdapter(listVertical, homeViewModel.isListView.value ?: true)
+        binding.rvVertical.adapter = verticalFoodAdapter
+
 
         binding.rvHorizontal.setHasFixedSize(true)
         if (listHorizontal.isEmpty()) {
@@ -51,6 +61,14 @@ class HomeFragment : Fragment() {
             listVertical.addAll(getListFoodsVertical())
         }
         showRecyclerListVertical()
+
+        homeViewModel.isListView.observe(viewLifecycleOwner) {
+            toggleLayout()
+        }
+
+        homeViewModel.foodItems.observe(viewLifecycleOwner) { foodItems ->
+            updateRecyclerView(foodItems)
+        }
 
         toggleLayout()
         itemClicked()
@@ -125,13 +143,8 @@ class HomeFragment : Fragment() {
         binding.rvVertical.adapter = listFoodAdapter
     }
 
-    private fun toggleImageViewImage(imageView: ImageView) {
-        imageView.setImageResource(listLayout[if (isListView) 0 else 1])
-    }
-
     @SuppressLint("NotifyDataSetChanged")
-    private fun toggleRecyclerViewLayout() {
-        isListView = !isListView
+    private fun toggleRecyclerViewLayout(isListView: Boolean) {
 
         if (isListView) {
             showGrid()
@@ -139,7 +152,18 @@ class HomeFragment : Fragment() {
             showLinear()
         }
 
-        binding.rvVertical.adapter?.notifyDataSetChanged()
+        binding.ivToggle.setImageResource(
+            if (isListView) R.drawable.ic_list else R.drawable.ic_grid
+        )
+    }
+
+    private fun itemClicked() {
+        verticalFoodAdapter =
+            VerticalFoodAdapter(listVertical, homeViewModel.isListView.value ?: true) { item ->
+                val bundle = bundleOf("item" to item)
+                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+            }
+        binding.rvVertical.adapter = verticalFoodAdapter
     }
 
     private fun showGrid() {
@@ -156,24 +180,36 @@ class HomeFragment : Fragment() {
         binding.rvVertical.adapter = verticalFoodAdapter
     }
 
-    private fun toggleLayout() {
-        val toggleImage = binding.ivToggle
-        toggleImage.setOnClickListener {
-            toggleRecyclerViewLayout()
-            toggleImageViewImage(toggleImage)
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateRecyclerView(foodItems: ArrayList<Foods>) {
+
+        verticalFoodAdapter.updateData(foodItems)
+        verticalFoodAdapter.isGridMode = homeViewModel.isListView.value ?: true
+        binding.rvVertical.adapter?.notifyDataSetChanged()
+
     }
 
-    private fun itemClicked() {
+    private fun toggleLayout() {
+        val toggleImage = binding.ivToggle
+        val currentLayoutValue =
+            homeViewModel.isListView.value ?: userPreferences.getLayoutPreferences()
 
-        val navController = findNavController()
-        val onItemClick: (Foods) -> Unit = { item ->
-            val bundle = bundleOf("item" to item)
-            navController.navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+        Log.d(
+            "LayoutPreference",
+            "Current Layout Value: $currentLayoutValue, ${userPreferences.getLayoutPreferences()}"
+        )
+
+
+        toggleRecyclerViewLayout(currentLayoutValue)
+        toggleImage.setImageResource(if (currentLayoutValue) R.drawable.ic_list else R.drawable.ic_grid)
+
+        toggleImage.setOnClickListener {
+            val newListViewValue = !currentLayoutValue
+            homeViewModel.isListView.value = newListViewValue
+            userPreferences.saveLayoutPreferences(newListViewValue)
+            Log.d("LayoutPreference", "New Layout Value: $newListViewValue")
+
         }
-
-        verticalFoodAdapter = VerticalFoodAdapter(listVertical, isListView, onItemClick)
-        binding.rvVertical.adapter = verticalFoodAdapter
     }
 
     private fun onBackPressed() {

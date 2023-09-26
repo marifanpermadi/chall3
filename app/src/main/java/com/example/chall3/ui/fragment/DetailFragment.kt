@@ -8,15 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.chall3.model.Foods
 import com.example.chall3.R
 import com.example.chall3.databinding.FragmentDetailBinding
+import com.example.chall3.viewmodel.HomeViewModel
 
 
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
+    private lateinit var homeViewModel: HomeViewModel
 
     private var totalPrice: Int = 0
     private var currentAmount: Int = 1
@@ -27,12 +30,16 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+
+        homeViewModel.isListView.value = true // Set the appropriate initial state
+
+        //homeViewModel.foodItems.value = // Set the appropriate data list
 
         setData()
         seeOnMaps()
         setAddition()
         setReduction()
-        //onBackPressed()
         iconBackClicked()
 
         return binding.root
@@ -92,16 +99,9 @@ class DetailFragment : Fragment() {
         }
     }
 
-    /*private fun onBackPressed() {
-        requireActivity()
-            .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                findNavController().navigate(R.id.homeFragment)
-            }
-    }*/
-
     private fun iconBackClicked() {
         binding.ivBack.setOnClickListener {
-            findNavController().navigate(R.id.homeFragment)
+            findNavController().navigate(R.id.action_detailFragment_to_homeFragment)
         }
     }
 }
