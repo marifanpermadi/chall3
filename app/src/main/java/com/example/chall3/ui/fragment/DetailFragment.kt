@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.model.Foods
+import com.example.chall3.viewmodel.DetailViewModel
 import com.example.chall3.viewmodel.HomeViewModel
 
 
@@ -18,9 +19,8 @@ class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var detailViewModel: DetailViewModel
 
-    private var totalPrice: Int = 0
-    private var currentAmount: Int = 1
     private var item: Foods? = null
 
     override fun onCreateView(
@@ -29,8 +29,17 @@ class DetailFragment : Fragment() {
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        detailViewModel = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
 
         homeViewModel.isListView.value = true
+
+        detailViewModel.currentAmount.observe(viewLifecycleOwner) { newAmount ->
+            binding.tvNumber.text = newAmount.toString()
+        }
+
+        detailViewModel.totalPrice.observe(viewLifecycleOwner) { newTotalPrice ->
+            binding.tvTotal.text = newTotalPrice.toString()
+        }
 
         setData()
         seeOnMaps()
@@ -53,33 +62,28 @@ class DetailFragment : Fragment() {
             binding.btStar.text = item?.star
             binding.tvLocationDesc.text = item?.address
             binding.tvTotal.text = item?.price.toString()
+
+            detailViewModel.initSelectedItem(it)
         }
     }
 
     private fun setAddition() {
         binding.btPlus.setOnClickListener {
-            currentAmount++
-            updateTotalPrice()
-        }
+            val newAmount = detailViewModel.currentAmount.value?.plus(1) ?: 1
+            detailViewModel.setCurrentAmount(newAmount)
 
+        }
     }
 
     private fun setReduction() {
         binding.btMin.setOnClickListener {
+            val currentAmount = detailViewModel.currentAmount.value ?: 1
             if (currentAmount > 1) {
-                currentAmount--
-                updateTotalPrice()
+                val newAmount = currentAmount - 1
+                detailViewModel.setCurrentAmount(newAmount)
             } else {
                 Toast.makeText(requireContext(), "Minimum purchase is 1", Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun updateTotalPrice() {
-        item?.let {
-            totalPrice = item?.price?.times(currentAmount) ?: 0
-            binding.tvNumber.text = currentAmount.toString()
-            binding.tvTotal.text = totalPrice.toString()
         }
     }
 
@@ -99,5 +103,12 @@ class DetailFragment : Fragment() {
         binding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        detailViewModel.setCurrentAmount(1)
+        item?.let { detailViewModel.clearTotalPrice(it.price) }
     }
 }
