@@ -108,5 +108,6 @@
     <string name="place_order">Order</string>
     <string name="notes">Notes</string>
     <string name="note_for">Note for your order (25 characters max)</string>
+    <string name="ok">OK</string>
 
 </resources>

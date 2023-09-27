@@ -13,11 +13,13 @@ import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.DetailViewModel
 import com.example.chall3.viewmodel.HomeViewModel
+import com.example.chall3.viewmodel.ViewModelFactory
 
 
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
+
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var detailViewModel: DetailViewModel
 
@@ -28,10 +30,13 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
+
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        detailViewModel = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
+        setUpDetailViewModel()
 
         homeViewModel.isListView.value = true
+
+        detailViewModel.orderNote.observe(viewLifecycleOwner) { }
 
         detailViewModel.currentAmount.observe(viewLifecycleOwner) { newAmount ->
             binding.tvNumber.text = newAmount.toString()
@@ -46,6 +51,8 @@ class DetailFragment : Fragment() {
         setAddition()
         setReduction()
         iconBackClicked()
+        takeNote()
+        addToCart()
 
         return binding.root
     }
@@ -103,6 +110,27 @@ class DetailFragment : Fragment() {
         binding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
+    }
+
+    private fun addToCart() {
+        binding.btCart.setOnClickListener {
+            detailViewModel.addToCart()
+            Toast.makeText(requireContext(), "Item added to cart", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun takeNote() {
+        binding.ivCheck.setOnClickListener {
+            val note = binding.etNote.text.toString()
+            detailViewModel.setOrderNote(note)
+            Toast.makeText(requireContext(),"Note added", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setUpDetailViewModel() {
+        val viewModelFactory = ViewModelFactory(requireActivity().application)
+        detailViewModel =
+            ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
     }
 
     override fun onDestroyView() {
