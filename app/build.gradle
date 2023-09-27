@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -60,4 +61,11 @@ dependencies {
 
     //Live Data
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+
+    //Datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    //Room
+    implementation 'androidx.room:room-runtime:2.5.2'
+    kapt 'androidx.room:room-compiler:2.5.2'
 }

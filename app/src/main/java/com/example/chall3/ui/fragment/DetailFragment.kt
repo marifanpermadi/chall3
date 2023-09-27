@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.example.chall3.model.Foods
-import com.example.chall3.R
 import com.example.chall3.databinding.FragmentDetailBinding
+import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.HomeViewModel
 
 
@@ -32,9 +30,7 @@ class DetailFragment : Fragment() {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
-        homeViewModel.isListView.value = true // Set the appropriate initial state
-
-        //homeViewModel.foodItems.value = // Set the appropriate data list
+        homeViewModel.isListView.value = true
 
         setData()
         seeOnMaps()
@@ -101,7 +97,7 @@ class DetailFragment : Fragment() {
 
     private fun iconBackClicked() {
         binding.ivBack.setOnClickListener {
-            findNavController().navigate(R.id.action_detailFragment_to_homeFragment)
+            requireActivity().onBackPressed()
         }
     }
 }

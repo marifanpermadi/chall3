@@ -85,8 +85,8 @@
     <string name="location">Location</string>
     <string name="location_description">Location Description</string>
     <string name="add_to_cart">Add to cart</string>
-    <string name="total">Total</string>
-    <string name="rp">rp.</string>
+    <string name="total">Total:</string>
+    <string name="rp">IDR</string>
     <string name="add">+</string>
     <string name="_1">1</string>
     <string name="minus">-</string>
@@ -99,5 +99,14 @@
     <string name="profile_fragment">Profile</string>
     <string name="this_profile_fragment">Profile fragment</string>
     <string name="this_cart_fragment">Cart fragment</string>
+    <string name="delivery_method">Delivery method</string>
+    <string name="take_away">Take away</string>
+    <string name="delivery">Delivery</string>
+    <string name="payment_method">Payment method</string>
+    <string name="cash">Cash</string>
+    <string name="e_wallet">E-wallet</string>
+    <string name="place_order">Order</string>
+    <string name="notes">Notes</string>
+    <string name="note_for">Note for your order (25 characters max)</string>
 
 </resources>

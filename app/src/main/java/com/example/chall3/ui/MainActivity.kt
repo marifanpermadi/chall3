@@ -1,9 +1,10 @@
-package com.example.chall3
+package com.example.chall3.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.chall3.R
 import com.example.chall3.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

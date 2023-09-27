@@ -134,6 +134,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
                     android:text="@string/description"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_food_name" />
@@ -181,20 +182,70 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="20dp"
                     android:text="@string/location_description"
+                    android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="@id/iv_store"
                     app:layout_constraintTop_toBottomOf="@id/tv_location" />
 
                 <ImageView
                     android:id="@+id/bt_maps"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/baseline_location_on_24"
-                    app:layout_constraintBottom_toTopOf="@id/divider2"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:tint="@color/orange_dark" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    app:dividerColor="@color/light_grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_location_desc" />
+
+                <ImageView
+                    android:id="@+id/iv_note"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_note"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider3"
                     app:tint="@color/orange_dark" />
+
+                <TextView
+                    android:id="@+id/tv_take_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/notes"
+                    android:textColor="@color/orange_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_note"
+                    app:layout_constraintStart_toEndOf="@id/iv_note" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/orange_dark"
+                    android:hint="@string/note_for"
+                    android:maxLength="25"
+                    android:textColorHint="@color/light_black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_note" />
 
 
                 <com.google.android.material.divider.MaterialDivider
@@ -285,6 +336,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
                     android:text="@string/_1"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/bt_cart"
