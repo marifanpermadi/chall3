@@ -11,6 +11,8 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             return DetailViewModel(application) as T
+        } else if (modelClass.isAssignableFrom(CartViewModel::class.java)) {
+            return CartViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

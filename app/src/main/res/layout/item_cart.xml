@@ -143,12 +143,13 @@
             android:id="@+id/tv_rp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="@string/rp"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="@id/tv_desc"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            tools:ignore="SmallSp" />
 
         <TextView
             android:id="@+id/tv_price"
@@ -160,21 +161,22 @@
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/tv_rp"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            app:layout_constraintBottom_toBottomOf="@id/tv_rp"
             tools:ignore="TextContrastCheck" />
 
         <TextView
             android:id="@+id/tv_note"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="18dp"
             android:background="@android:drawable/editbox_background"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/notes"
             android:textColor="@color/black"
             android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="@id/tv_rp"
+            app:layout_constraintStart_toEndOf="@id/iv_food"
             app:layout_constraintTop_toBottomOf="@id/tv_rp"
             tools:ignore="SmallSp" />
 

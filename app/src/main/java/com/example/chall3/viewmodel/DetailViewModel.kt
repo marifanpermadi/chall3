@@ -66,13 +66,17 @@ class DetailViewModel(application: Application) : ViewModel() {
         val selectedItem = _selectedItem.value
 
         selectedItem?.let {
-            val cartItem = totalPrice.value?.let { it1 ->
-                Cart(
-                    foodImage = it.photo,
-                    foodName = it.name,
-                    foodPrice = it1,
-                    orderNote = getOrderNote()
-                )
+            val cartItem =
+                totalPrice.value?.let { it1 ->
+                currentAmount.value?.let { it2 ->
+                    Cart(
+                        foodImage = it.photo,
+                        foodName = it.name,
+                        foodPrice = it1,
+                        orderNote = getOrderNote(),
+                        orderAmount = it2
+                    )
+                }
             }
             cartItem?.let { it1 -> insertCartItem(it1) }
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
 
         toggleLayout()
         itemClicked()
-        onBackPressed()
+        //onBackPressed()
 
         return binding.root
     }

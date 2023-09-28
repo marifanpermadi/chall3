@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.chall3.R
 import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.DetailViewModel
@@ -115,6 +117,7 @@ class DetailFragment : Fragment() {
     private fun addToCart() {
         binding.btCart.setOnClickListener {
             detailViewModel.addToCart()
+            findNavController().navigate(R.id.action_detailFragment_to_cartFragment)
             Toast.makeText(requireContext(), "Item added to cart", Toast.LENGTH_SHORT).show()
         }
     }
@@ -123,6 +126,7 @@ class DetailFragment : Fragment() {
         binding.ivCheck.setOnClickListener {
             val note = binding.etNote.text.toString()
             detailViewModel.setOrderNote(note)
+            binding.etNote.text?.clear()
             Toast.makeText(requireContext(),"Note added", Toast.LENGTH_SHORT).show()
         }
     }
