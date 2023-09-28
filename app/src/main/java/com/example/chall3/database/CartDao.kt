@@ -19,4 +19,7 @@ interface CartDao {
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<Cart>>
 
+    @Query("DELETE FROM cart_items WHERE id = :cartId")
+    fun deleteById(cartId: Long)
+
 }

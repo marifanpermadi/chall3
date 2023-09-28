@@ -26,13 +26,13 @@ class CartFragment : Fragment() {
         binding = FragmentCartBinding.inflate(inflater, container, false)
         setUpCartViewModel()
 
-        cartAdapter = CartAdapter()
+        cartAdapter = CartAdapter(cartViewModel)
         binding.rvCart.setHasFixedSize(true)
         binding.rvCart.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCart.adapter = cartAdapter
 
         cartViewModel.allCartItems.observe(viewLifecycleOwner) {
-             cartAdapter.setData(it)
+            cartAdapter.setData(it)
         }
 
         return binding.root

@@ -19,11 +19,11 @@ class CartRepository(application: Application) {
     }
 
     fun insert(cart: Cart) {
-        executorService.execute {mCartDao.insert(cart)}
+        executorService.execute { mCartDao.insert(cart) }
     }
 
-    fun delete(cart: Cart) {
-        executorService.execute {mCartDao.delete(cart)}
+    fun deleteById(cartId: Long) {
+        executorService.execute { mCartDao.deleteById(cartId) }
     }
 
     fun getAllCartItems(): LiveData<List<Cart>> = mCartDao.getAllCartItems()
