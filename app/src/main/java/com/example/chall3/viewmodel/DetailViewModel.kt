@@ -74,7 +74,8 @@ class DetailViewModel(application: Application) : ViewModel() {
                         foodName = it.name,
                         foodPrice = it1,
                         orderNote = getOrderNote(),
-                        orderAmount = it2
+                        orderAmount = it2,
+                        basePrice = it.price
                     )
                 }
             }

@@ -35,6 +35,10 @@ class CartFragment : Fragment() {
             cartAdapter.setData(it)
         }
 
+        cartViewModel.cartItemLiveData.observe(viewLifecycleOwner) {
+
+        }
+
         return binding.root
     }
 

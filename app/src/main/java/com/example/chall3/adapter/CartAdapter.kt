@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chall3.R
 import com.example.chall3.database.Cart
@@ -33,17 +35,45 @@ class CartAdapter(
             cartViewModel.deleteCartItemById(currentItem.id)
             showSnackBar(holder.itemView)
         }
+
+        //val basePrice = currentItem.foodPrice / currentItem.orderAmount
+
+        holder.btPlus.setOnClickListener {
+            val newAmount = currentItem.orderAmount + 1
+            currentItem.orderAmount = newAmount
+
+            cartViewModel.updateCart(currentItem)
+
+            holder.tvNumber.text = newAmount.toString()
+            //holder.tvPrice.text = (newAmount * basePrice).toString()
+        }
+
+        holder.btMin.setOnClickListener {
+            if (currentItem.orderAmount > 1) {
+                val newAmount  = currentItem.orderAmount - 1
+                currentItem.orderAmount = newAmount
+
+                cartViewModel.updateCart(currentItem)
+
+                holder.tvNumber.text = newAmount.toString()
+                //holder.tvPrice.text = (newAmount * basePrice).toString()
+            }
+        }
     }
 
     class CartViewHolder(private val binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         val ivDelete: ImageView = itemView.findViewById(R.id.iv_delete)
+        val btPlus: Button = itemView.findViewById(R.id.bt_plus)
+        val btMin: Button = itemView.findViewById(R.id.bt_min)
+        val tvNumber: TextView = itemView.findViewById(R.id.tv_number)
+        val tvPrice: TextView = itemView.findViewById(R.id.tv_price)
 
         fun bind(cartItem: Cart) {
             binding.tvDesc.text = cartItem.foodName
             binding.ivFood.setImageResource(cartItem.foodImage)
-            binding.tvPrice.text = cartItem.foodPrice.toString()
+            binding.tvPrice.text = cartItem.basePrice.toString()
             binding.tvNote.text = cartItem.orderNote
             binding.tvNumber.text = cartItem.orderAmount.toString()
         }
@@ -56,7 +86,7 @@ class CartAdapter(
     }
 
     private fun showSnackBar(view: View) {
-        Snackbar.make(view, "Item removed from the chart", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, "Item removed from the cart", Snackbar.LENGTH_SHORT).show()
     }
 
 }
