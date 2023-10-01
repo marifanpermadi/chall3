@@ -36,27 +36,29 @@ class CartAdapter(
             showSnackBar(holder.itemView)
         }
 
-        //val basePrice = currentItem.foodPrice / currentItem.orderAmount
-
         holder.btPlus.setOnClickListener {
             val newAmount = currentItem.orderAmount + 1
             currentItem.orderAmount = newAmount
 
-            cartViewModel.updateCart(currentItem)
 
+            cartViewModel.updateCart(currentItem)
             holder.tvNumber.text = newAmount.toString()
-            //holder.tvPrice.text = (newAmount * basePrice).toString()
+
+            currentItem.foodPrice = currentItem.basePrice * newAmount
+            holder.tvPrice.text = currentItem.foodPrice.toString()
         }
 
         holder.btMin.setOnClickListener {
             if (currentItem.orderAmount > 1) {
-                val newAmount  = currentItem.orderAmount - 1
+                val newAmount = currentItem.orderAmount - 1
                 currentItem.orderAmount = newAmount
+                currentItem.foodPrice = currentItem.basePrice * newAmount
 
                 cartViewModel.updateCart(currentItem)
-
                 holder.tvNumber.text = newAmount.toString()
-                //holder.tvPrice.text = (newAmount * basePrice).toString()
+
+                currentItem.foodPrice = currentItem.basePrice * newAmount
+                holder.tvPrice.text = currentItem.foodPrice.toString()
             }
         }
     }
@@ -73,7 +75,7 @@ class CartAdapter(
         fun bind(cartItem: Cart) {
             binding.tvDesc.text = cartItem.foodName
             binding.ivFood.setImageResource(cartItem.foodImage)
-            binding.tvPrice.text = cartItem.basePrice.toString()
+            binding.tvPrice.text = cartItem.foodPrice.toString()
             binding.tvNote.text = cartItem.orderNote
             binding.tvNumber.text = cartItem.orderAmount.toString()
         }

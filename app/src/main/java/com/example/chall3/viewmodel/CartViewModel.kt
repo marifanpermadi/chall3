@@ -16,6 +16,8 @@ class CartViewModel(application: Application) : ViewModel() {
     private val _cartItemLiveData = MutableLiveData<Cart>()
     val cartItemLiveData: LiveData<Cart> = _cartItemLiveData
 
+    var totalPrice: LiveData<Int> = cartRepository.calculateTotalPrice()
+
     fun deleteCartItemById(cartId: Long) {
         cartRepository.deleteById(cartId)
     }
@@ -25,7 +27,4 @@ class CartViewModel(application: Application) : ViewModel() {
         _cartItemLiveData.value = cart
     }
 
-    fun totalPrice(cart: Cart) {
-
-    }
 }

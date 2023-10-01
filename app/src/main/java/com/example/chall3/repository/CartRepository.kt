@@ -2,6 +2,7 @@ package com.example.chall3.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.example.chall3.database.Cart
 import com.example.chall3.database.CartDao
 import com.example.chall3.database.CartDataBase
@@ -31,5 +32,15 @@ class CartRepository(application: Application) {
     }
 
     fun getAllCartItems(): LiveData<List<Cart>> = mCartDao.getAllCartItems()
+
+    fun calculateTotalPrice() : LiveData<Int> {
+        return mCartDao.getAllCartItems().map { cartItems ->
+            var total = 0
+            for (cartItem in cartItems) {
+                total += cartItem.basePrice * cartItem.orderAmount
+            }
+            total
+        }
+    }
 
 }

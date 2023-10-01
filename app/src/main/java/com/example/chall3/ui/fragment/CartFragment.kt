@@ -39,6 +39,10 @@ class CartFragment : Fragment() {
 
         }
 
+        cartViewModel.totalPrice.observe(viewLifecycleOwner) {
+            binding.tvSumTotal.text = it.toString()
+        }
+
         return binding.root
     }
 
