@@ -100,7 +100,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tv_rp"
-            app:layout_constraintStart_toEndOf="@id/tv_rp" />
+            app:layout_constraintStart_toEndOf="@id/tv_rp"
+            android:layout_marginStart="5dp"/>
 
         <TextView
             android:id="@+id/tv_total"

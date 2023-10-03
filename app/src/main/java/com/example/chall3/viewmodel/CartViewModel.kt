@@ -14,7 +14,6 @@ class CartViewModel(application: Application) : ViewModel() {
     val allCartItems: LiveData<List<Cart>> = cartRepository.getAllCartItems()
 
     private val _cartItemLiveData = MutableLiveData<Cart>()
-    val cartItemLiveData: LiveData<Cart> = _cartItemLiveData
 
     var totalPrice: LiveData<Int> = cartRepository.calculateTotalPrice()
 

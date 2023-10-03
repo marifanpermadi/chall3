@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
 
         toggleLayout()
         itemClicked()
-        //onBackPressed()
+        onBackPressed()
 
         return binding.root
     }

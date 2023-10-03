@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -39,22 +40,23 @@ class CartFragment : Fragment() {
                 binding.tvAwe.visibility = View.VISIBLE
                 binding.tvNoItem.visibility = View.VISIBLE
                 binding.ivEmpty.visibility = View.VISIBLE
+                binding.rvCart.visibility = View.GONE
             } else {
                 binding.tvAwe.visibility = View.GONE
                 binding.tvNoItem.visibility = View.GONE
                 binding.ivEmpty.visibility = View.GONE
+                binding.rvCart.visibility = View.VISIBLE
                 cartAdapter.setData(it)
             }
-
-        }
-
-        cartViewModel.cartItemLiveData.observe(viewLifecycleOwner) {
 
         }
 
         cartViewModel.totalPrice.observe(viewLifecycleOwner) {
             binding.tvSumTotal.text = it.toString()
         }
+
+        orderItem()
+        onBackPressed()
 
         return binding.root
     }
@@ -64,15 +66,21 @@ class CartFragment : Fragment() {
         cartViewModel = ViewModelProvider(this, viewModelFactory)[CartViewModel::class.java]
     }
 
+    private fun orderItem() {
+        binding.btOrder.setOnClickListener {
+            if (!cartViewModel.allCartItems.value.isNullOrEmpty()) {
+                findNavController().navigate(R.id.action_cartFragment_to_orderFragment)
+            } else {
+                Toast.makeText(requireContext(), "Your cart is empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun onBackPressed() {
         val navController = findNavController()
         requireActivity()
             .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                if (navController.currentDestination?.id == R.id.homeFragment) {
-                    requireActivity().finish()
-                } else {
-                    navController.navigateUp()
-                }
+                navController.navigate(R.id.action_cartFragment_to_homeFragment)
             }
     }
 

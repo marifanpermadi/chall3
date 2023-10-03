@@ -1,17 +1,5 @@
 <resources>
 
-    <string name="app_name">chall3</string>
-    <string name="hello_binarian">Hello Binarian,</string>
-    <string name="feeling_hungry">Feeling hungry?</string>
-    <string name="for_you">For you:</string>
-    <string name="account_image">Account Image</string>
-    <string name="cart_image">Cart Image</string>
-    <string name="order_now">Treat yourself with the best deal!</string>
-    <string name="banner_image">Banner Image</string>
-    <string name="food_image">Food Image</string>
-    <string name="category">Category:</string>
-    <string name="_10_000">10.000</string>
-
     <string-array name="data_name">
         <item>Burger</item>
         <item>Pizza</item>
@@ -78,7 +66,17 @@
         <item>Jl. Kembangan Raya No.24, RT.1/RW.2, Kembangan Sel., Kec. Kembangan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11610</item>
     </string-array>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">chall3</string>
+    <string name="hello_binarian">Hello Binarian,</string>
+    <string name="feeling_hungry">Feeling hungry?</string>
+    <string name="for_you">For you:</string>
+    <string name="account_image">Account Image</string>
+    <string name="cart_image">Cart Image</string>
+    <string name="order_now">Treat yourself with the best deal!</string>
+    <string name="banner_image">Banner Image</string>
+    <string name="food_image">Food Image</string>
+    <string name="category">Category:</string>
+    <string name="_10_000">10.000</string>
     <string name="burger">Burger</string>
     <string name="price">Price</string>
     <string name="description">Description</string>
@@ -118,5 +116,10 @@
     <string name="total_payment">Total payment:</string>
     <string name="oopss">Oopss!</string>
     <string name="there_is_no">Currently there is no item in your cart</string>
+    <string name="pay_now">Pay now</string>
+    <string name="yeay">Yeay!</string>
+    <string name="payment_successful">Payment successful</string>
+    <string name="order_is_complete">Your order is complete</string>
+    <string name="back_to_home">Back to home</string>
 
 </resources>
