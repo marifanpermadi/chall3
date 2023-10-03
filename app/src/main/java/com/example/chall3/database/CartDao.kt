@@ -14,8 +14,8 @@ interface CartDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(cartItem: Cart)
 
-    @Delete
-    fun delete(cartItem: Cart)
+    @Query("DELETE FROM cart_items")
+    fun deleteALlItems()
 
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<Cart>>

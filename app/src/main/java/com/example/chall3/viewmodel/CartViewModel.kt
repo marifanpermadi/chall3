@@ -21,6 +21,10 @@ class CartViewModel(application: Application) : ViewModel() {
         cartRepository.deleteById(cartId)
     }
 
+    fun deleteAllItems() {
+        cartRepository.deleteAllItems()
+    }
+
     fun updateCart(cart: Cart) {
         cartRepository.update(cart)
         _cartItemLiveData.value = cart

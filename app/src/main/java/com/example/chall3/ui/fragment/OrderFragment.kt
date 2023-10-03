@@ -54,6 +54,7 @@ class OrderFragment : Fragment() {
         binding.btPay.setOnClickListener {
             val dialogFragment = PaymentSuccessDialog()
             dialogFragment.show(childFragmentManager, "PaymentSuccessDialog")
+            cartViewModel.deleteAllItems()
         }
     }
 

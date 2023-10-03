@@ -31,6 +31,10 @@ class CartRepository(application: Application) {
         executorService.execute { mCartDao.update(cart) }
     }
 
+    fun deleteAllItems() {
+        executorService.execute { mCartDao.deleteALlItems() }
+    }
+
     fun getAllCartItems(): LiveData<List<Cart>> = mCartDao.getAllCartItems()
 
     fun calculateTotalPrice() : LiveData<Int> {
