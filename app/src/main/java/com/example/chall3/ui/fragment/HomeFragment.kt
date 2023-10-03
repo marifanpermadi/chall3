@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
@@ -205,8 +204,6 @@ class HomeFragment : Fragment() {
             val newListViewValue = !currentLayoutValue
             homeViewModel.isListView.value = newListViewValue
             userPreferences.saveLayoutPreferences(newListViewValue)
-            Log.d("LayoutPreference", "New Layout Value: $newListViewValue")
-
         }
     }
 

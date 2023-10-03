@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.chall3.R
 import com.example.chall3.adapter.CartAdapter
 import com.example.chall3.databinding.FragmentCartBinding
 import com.example.chall3.viewmodel.CartViewModel
@@ -32,7 +35,17 @@ class CartFragment : Fragment() {
         binding.rvCart.adapter = cartAdapter
 
         cartViewModel.allCartItems.observe(viewLifecycleOwner) {
-            cartAdapter.setData(it)
+            if (it.isEmpty()) {
+                binding.tvAwe.visibility = View.VISIBLE
+                binding.tvNoItem.visibility = View.VISIBLE
+                binding.ivEmpty.visibility = View.VISIBLE
+            } else {
+                binding.tvAwe.visibility = View.GONE
+                binding.tvNoItem.visibility = View.GONE
+                binding.ivEmpty.visibility = View.GONE
+                cartAdapter.setData(it)
+            }
+
         }
 
         cartViewModel.cartItemLiveData.observe(viewLifecycleOwner) {
@@ -49,6 +62,18 @@ class CartFragment : Fragment() {
     private fun setUpCartViewModel() {
         val viewModelFactory = ViewModelFactory(requireActivity().application)
         cartViewModel = ViewModelProvider(this, viewModelFactory)[CartViewModel::class.java]
+    }
+
+    private fun onBackPressed() {
+        val navController = findNavController()
+        requireActivity()
+            .onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                if (navController.currentDestination?.id == R.id.homeFragment) {
+                    requireActivity().finish()
+                } else {
+                    navController.navigateUp()
+                }
+            }
     }
 
 }

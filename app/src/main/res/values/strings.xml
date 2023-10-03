@@ -109,5 +109,14 @@
     <string name="notes">Notes</string>
     <string name="note_for">Note for your order (25 characters max)</string>
     <string name="ok">OK</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="phone">Phone</string>
+    <string name="payment_detail">Payment detail</string>
+    <string name="total_payment">Total payment:</string>
+    <string name="oopss">Oopss!</string>
+    <string name="there_is_no">Currently there is no item in your cart</string>
 
 </resources>

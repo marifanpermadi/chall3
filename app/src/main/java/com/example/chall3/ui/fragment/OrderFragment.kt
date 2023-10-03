@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.chall3.R
+import com.example.chall3.databinding.FragmentOrderBinding
 
 class OrderFragment : Fragment() {
+
+    private lateinit var binding: FragmentOrderBinding
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false)
+    ): View {
+        binding = FragmentOrderBinding.inflate(inflater, container, false)
+
+
+        return binding.root
     }
 
 }
