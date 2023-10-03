@@ -1,5 +1,6 @@
 package com.example.chall3.ui.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -118,8 +119,9 @@ class DetailFragment : Fragment() {
     private fun addToCart() {
         binding.btCart.setOnClickListener {
             detailViewModel.addToCart()
-            findNavController().navigate(R.id.action_detailFragment_to_cartFragment)
-            Snackbar.make(it, "Item added to cart", Snackbar.LENGTH_SHORT).show()
+
+            showItemAddedSnackBar()
+            fromTheStart()
         }
     }
 
@@ -127,7 +129,7 @@ class DetailFragment : Fragment() {
         binding.ivCheck.setOnClickListener {
             val note = binding.etNote.text.toString()
             detailViewModel.setOrderNote(note)
-            Toast.makeText(requireContext(),"Note added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -135,6 +137,33 @@ class DetailFragment : Fragment() {
         val viewModelFactory = ViewModelFactory(requireActivity().application)
         detailViewModel =
             ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showItemAddedSnackBar() {
+        val inflater = LayoutInflater.from(requireContext())
+        val customView = inflater.inflate(R.layout.item_added_snackbar, null)
+
+        val snackBar = Snackbar.make(binding.btCart, "", Snackbar.LENGTH_SHORT)
+        val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
+
+        snackBarLayout.removeAllViews()
+        snackBarLayout.addView(customView, 0)
+
+        customView.setOnClickListener {
+            val action = DetailFragmentDirections.actionDetailFragmentToCartFragment()
+            findNavController().navigate(action)
+            snackBar.dismiss()
+        }
+
+        snackBar.show()
+    }
+
+    private fun fromTheStart() {
+        binding.etNote.text?.clear()
+
+        detailViewModel.setCurrentAmount(1)
+        item?.let { detailViewModel.clearTotalPrice(it.price) }
     }
 
     override fun onDestroyView() {

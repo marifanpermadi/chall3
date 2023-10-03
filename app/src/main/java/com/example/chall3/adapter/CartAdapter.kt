@@ -40,7 +40,6 @@ class CartAdapter(
             val newAmount = currentItem.orderAmount + 1
             currentItem.orderAmount = newAmount
 
-
             cartViewModel.updateCart(currentItem)
             holder.tvNumber.text = newAmount.toString()
 

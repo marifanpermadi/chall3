@@ -121,5 +121,7 @@
     <string name="payment_successful">Payment successful</string>
     <string name="order_is_complete">Your order is complete</string>
     <string name="back_to_home">Back to home</string>
+    <string name="item_added">Item added to cart.</string>
+    <string name="see_now">See now</string>
 
 </resources>
