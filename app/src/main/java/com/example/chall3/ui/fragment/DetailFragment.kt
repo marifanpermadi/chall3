@@ -16,7 +16,7 @@ import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.DetailViewModel
 import com.example.chall3.viewmodel.HomeViewModel
-import com.example.chall3.viewmodel.ViewModelFactory
+import com.example.chall3.viewmodelfactory.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 

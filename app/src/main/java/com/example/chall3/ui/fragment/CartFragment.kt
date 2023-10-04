@@ -14,7 +14,7 @@ import com.example.chall3.R
 import com.example.chall3.adapter.CartAdapter
 import com.example.chall3.databinding.FragmentCartBinding
 import com.example.chall3.viewmodel.CartViewModel
-import com.example.chall3.viewmodel.ViewModelFactory
+import com.example.chall3.viewmodelfactory.ViewModelFactory
 
 class CartFragment : Fragment() {
 

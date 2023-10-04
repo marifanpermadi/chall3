@@ -11,7 +11,7 @@ import com.example.chall3.adapter.CartAdapter
 import com.example.chall3.databinding.FragmentOrderBinding
 import com.example.chall3.ui.customlayout.PaymentSuccessDialog
 import com.example.chall3.viewmodel.CartViewModel
-import com.example.chall3.viewmodel.ViewModelFactory
+import com.example.chall3.viewmodelfactory.ViewModelFactory
 
 class OrderFragment : Fragment() {
 

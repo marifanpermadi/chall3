@@ -123,5 +123,6 @@
     <string name="back_to_home">Back to home</string>
     <string name="item_added">Item added to cart.</string>
     <string name="see_now">See now</string>
+    <string name="dark_mode">Dark mode</string>
 
 </resources>

@@ -3,10 +3,15 @@ package com.example.chall3.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.chall3.R
 import com.example.chall3.databinding.ActivityMainBinding
+import com.example.chall3.utils.SettingPreferences
+import com.example.chall3.viewmodel.SettingViewModel
+import com.example.chall3.viewmodelfactory.SettingViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,14 +27,34 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener {_, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailFragment, R.id.orderFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
-                } else -> {
+                }
+
+                else -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
                 }
             }
         }
+
+        themePreferences()
+    }
+
+    private fun themePreferences() {
+
+        val pref = SettingPreferences.getInstance(dataStore)
+        val settingViewModel =
+            ViewModelProvider(this, SettingViewModelFactory(pref))[SettingViewModel::class.java]
+
+        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
     }
 }
