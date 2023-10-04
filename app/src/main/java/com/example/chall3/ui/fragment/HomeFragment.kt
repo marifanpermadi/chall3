@@ -1,6 +1,7 @@
 package com.example.chall3.ui.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.example.chall3.adapter.HorizontalFoodAdapter
 import com.example.chall3.adapter.VerticalFoodAdapter
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.model.Foods
+import com.example.chall3.ui.SettingActivity
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.utils.UserPreferences
 
@@ -70,6 +72,7 @@ class HomeFragment : Fragment() {
         toggleLayout()
         itemClicked()
         onBackPressed()
+        settingActivity()
 
         return binding.root
     }
@@ -204,6 +207,13 @@ class HomeFragment : Fragment() {
             val newListViewValue = !currentLayoutValue
             homeViewModel.isListView.value = newListViewValue
             userPreferences.saveLayoutPreferences(newListViewValue)
+        }
+    }
+
+    private fun settingActivity() {
+        binding.ivSetting.setOnClickListener {
+            val intent = Intent(this@HomeFragment.requireContext(), SettingActivity::class.java)
+            startActivity(intent)
         }
     }
 

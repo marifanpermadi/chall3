@@ -28,15 +28,15 @@
         app:layout_constraintTop_toBottomOf="@id/tv_hello" />
 
     <ImageView
-        android:id="@+id/iv_account"
+        android:id="@+id/iv_setting"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:contentDescription="@string/account_image"
-        android:src="@drawable/ic_account"
+        android:src="@drawable/ic_setting"
         app:layout_constraintEnd_toEndOf="@id/cv_banner"
         app:layout_constraintTop_toTopOf="@id/tv_hello"
         app:tint="@color/light_magenta"
-        tools:ignore="ImageContrastCheck" />
+        tools:ignore="ImageContrastCheck"
+        android:importantForAccessibility="no" />
 
     <ImageView
         android:id="@+id/iv_cart"
@@ -45,8 +45,8 @@
         android:layout_marginEnd="20dp"
         android:contentDescription="@string/cart_image"
         android:src="@drawable/ic_cart"
-        app:layout_constraintEnd_toStartOf="@id/iv_account"
-        app:layout_constraintTop_toTopOf="@id/iv_account"
+        app:layout_constraintEnd_toStartOf="@id/iv_setting"
+        app:layout_constraintTop_toTopOf="@id/iv_setting"
         app:tint="@color/light_magenta"
         tools:ignore="ImageContrastCheck" />
 
