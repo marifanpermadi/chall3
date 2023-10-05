@@ -66,7 +66,7 @@
         <item>Jl. Kembangan Raya No.24, RT.1/RW.2, Kembangan Sel., Kec. Kembangan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11610</item>
     </string-array>
 
-    <string name="app_name">chall3</string>
+    <string name="app_name" translatable="false">chall3</string>
     <string name="hello_binarian">Hello Binarian,</string>
     <string name="feeling_hungry">Feeling hungry?</string>
     <string name="for_you">For you:</string>
@@ -76,7 +76,7 @@
     <string name="banner_image">Banner Image</string>
     <string name="food_image">Food Image</string>
     <string name="category">Category:</string>
-    <string name="_10_000">10.000</string>
+    <string name="_10_000" translatable="false">10.000</string>
     <string name="burger">Burger</string>
     <string name="price">Price</string>
     <string name="description">Description</string>
@@ -85,36 +85,36 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="total">Total:</string>
     <string name="rp">IDR</string>
-    <string name="add">+</string>
-    <string name="_1">1</string>
-    <string name="minus">-</string>
+    <string name="add" translatable="false">+</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="minus" translatable="false">-</string>
     <string name="free_delivery">FREE DELIVERY!</string>
     <string name="order">Order now</string>
-    <string name="_4_8">4.8</string>
+    <string name="_4_8" translatable="false">4.8</string>
     <string name="see_on_map">See on map</string>
     <string name="home_fragment">Home</string>
     <string name="cart_fragment">Cart</string>
     <string name="profile_fragment">Profile</string>
-    <string name="this_profile_fragment">Profile fragment</string>
-    <string name="this_cart_fragment">Cart fragment</string>
+    <string name="this_profile_fragment" translatable="false">Profile fragment</string>
+    <string name="this_cart_fragment" translatable="false">Cart fragment</string>
     <string name="delivery_method">Delivery method</string>
     <string name="take_away">Take away</string>
     <string name="delivery">Delivery</string>
     <string name="payment_method">Payment method</string>
     <string name="cash">Cash</string>
-    <string name="e_wallet">E-wallet</string>
+    <string name="e_wallet" translatable="false">E-wallet</string>
     <string name="place_order">Order</string>
     <string name="notes">Notes</string>
     <string name="note_for">Note for your order (25 characters max)</string>
     <string name="ok">OK</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
+    <string name="username" translatable="false">Username</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="email" translatable="false">Email</string>
     <string name="profile_image">Profile Image</string>
-    <string name="phone">Phone</string>
+    <string name="phone" translatable="false">Phone</string>
     <string name="payment_detail">Payment detail</string>
     <string name="total_payment">Total payment:</string>
-    <string name="oopss">Oopss!</string>
+    <string name="oopss" translatable="false">Oopss!</string>
     <string name="there_is_no">Currently there is no item in your cart</string>
     <string name="pay_now">Pay now</string>
     <string name="yeay">Yeay!</string>
@@ -124,5 +124,8 @@
     <string name="item_added">Item added to cart.</string>
     <string name="see_now">See now</string>
     <string name="dark_mode">Dark mode</string>
+    <string name="language">Language</string>
+    <string name="v_69_69" translatable="false">v.69</string>
+    <string name="warung_binar" translatable="false">Warung Binar</string>
 
 </resources>

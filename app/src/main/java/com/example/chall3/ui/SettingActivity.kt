@@ -1,8 +1,10 @@
 package com.example.chall3.ui
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
@@ -31,7 +33,7 @@ class SettingActivity : AppCompatActivity() {
         val settingViewModel =
             ViewModelProvider(this, SettingViewModelFactory(pref))[SettingViewModel::class.java]
 
-        settingViewModel.getThemeSettings().observe(this) {isDarkModeActive: Boolean ->
+        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 switchTheme.isChecked = true
@@ -45,5 +47,13 @@ class SettingActivity : AppCompatActivity() {
             settingViewModel.saveThemeSetting(isChecked)
         }
 
+        languageSetting()
+
+    }
+
+    private fun languageSetting() {
+        binding.ivLanguage.setOnClickListener {
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
     }
 }

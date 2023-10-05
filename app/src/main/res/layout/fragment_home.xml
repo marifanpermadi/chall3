@@ -38,19 +38,10 @@
         tools:ignore="ImageContrastCheck"
         android:importantForAccessibility="no" />
 
-    <ImageView
-        android:id="@+id/iv_cart"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="@string/cart_image"
-        android:src="@drawable/ic_cart"
-        app:layout_constraintEnd_toStartOf="@id/iv_setting"
-        app:layout_constraintTop_toTopOf="@id/iv_setting"
-        app:tint="@color/light_magenta"
-        tools:ignore="ImageContrastCheck" />
-
-    <include layout="@layout/banner_layout" />
+    <include
+        layout="@layout/banner_layout"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="82dp" />
 
     <TextView
         android:id="@+id/tv_category"

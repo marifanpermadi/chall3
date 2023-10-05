@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello_binarian">Halo Binarian,</string>
+    <string name="feeling_hungry">Laper ya?</string>
+    <string name="for_you">Buat kamu:</string>
+    <string name="account_image">Gambar akun</string>
+    <string name="cart_image">Gambar keranjang</string>
+    <string name="order_now">Manjakan dirimu dengan penawaran terbaik</string>
+    <string name="banner_image">Gambar baner</string>
+    <string name="food_image">Gambar makanan</string>
+    <string name="category">Kategori:</string>
+    <string name="burger">Burger</string>
+    <string name="price">Harga</string>
+    <string name="description">Deskripsi</string>
+    <string name="location">Lokasi</string>
+    <string name="location_description">Deskripsi lokasi</string>
+    <string name="add_to_cart">Tambah ke keranjang</string>
+    <string name="total">Total:</string>
+    <string name="rp">IDR</string>
+    <string name="free_delivery">GRATIS ONGKIR!</string>
+    <string name="order">Pesan sekarang</string>
+    <string name="see_on_map">Lihat di peta</string>
+    <string name="home_fragment">Beranda</string>
+    <string name="cart_fragment">Keranjang</string>
+    <string name="profile_fragment">Profil</string>
+    <string name="delivery_method">Metode pengiriman</string>
+    <string name="take_away">Bawa pulang</string>
+    <string name="delivery">Pesan antar</string>
+    <string name="payment_method">Metode pembayaran</string>
+    <string name="cash">Tunai</string>
+    <string name="place_order">Pesan</string>
+    <string name="notes">Catatan</string>
+    <string name="note_for">Catatan pesanan (max. 25 karakter)</string>
+    <string name="ok">OK</string>
+    <string name="profile_image">Gambar profil</string>
+    <string name="payment_detail">Detail pembayaran</string>
+    <string name="total_payment">Total pembayaran</string>
+    <string name="there_is_no">Kerangjang mu lagi kosong nich</string>
+    <string name="pay_now">Bayar sekarang</string>
+    <string name="yeay">Horayy!</string>
+    <string name="payment_successful">Pembayaran berhasil</string>
+    <string name="order_is_complete">Pesananmu selesai</string>
+    <string name="back_to_home">Kembail ke beranda</string>
+    <string name="item_added">Item ditambahkan ke keranjang</string>
+    <string name="see_now">Lihat</string>
+    <string name="dark_mode">Mode gelap</string>
+    <string name="language">Bahasa</string>
+</resources>

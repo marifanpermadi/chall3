@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.detailFragment, R.id.orderFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                 }
-
                 else -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
                 }
