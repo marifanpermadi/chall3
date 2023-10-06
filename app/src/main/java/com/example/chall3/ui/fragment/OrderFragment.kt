@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.chall3.R
 import com.example.chall3.adapter.CartAdapter
 import com.example.chall3.databinding.FragmentOrderBinding
 import com.example.chall3.ui.customlayout.PaymentSuccessDialog
@@ -19,12 +20,16 @@ class OrderFragment : Fragment() {
     private lateinit var cartViewModel: CartViewModel
     private lateinit var cartAdapter: CartAdapter
 
+    private var deliveryMethode: String? = null
+    private var paymentMethode: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentOrderBinding.inflate(inflater, container, false)
+
         setUpCartViewModel()
 
         cartAdapter = CartAdapter(cartViewModel)
@@ -40,6 +45,8 @@ class OrderFragment : Fragment() {
             binding.tvSumTotal.text = it.toString()
         }
 
+        deliveryMethod()
+        paymentMethod()
         payNow()
 
         return binding.root
@@ -55,6 +62,52 @@ class OrderFragment : Fragment() {
             val dialogFragment = PaymentSuccessDialog()
             dialogFragment.show(childFragmentManager, "PaymentSuccessDialog")
             cartViewModel.deleteAllItems()
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun deliveryMethod() {
+        binding.btTakeaway.setOnClickListener {
+            binding.btTakeaway.setBackgroundColor(resources.getColor(R.color.light_magenta))
+            binding.btTakeaway.setTextColor(resources.getColor(R.color.white))
+
+            binding.btDelivery.setBackgroundColor(resources.getColor(R.color.light_grey))
+            binding.btDelivery.setTextColor(resources.getColor(R.color.black))
+
+            deliveryMethode = binding.btTakeaway.text.toString()
+        }
+
+        binding.btDelivery.setOnClickListener {
+            binding.btDelivery.setBackgroundColor(resources.getColor(R.color.light_magenta))
+            binding.btDelivery.setTextColor(resources.getColor(R.color.white))
+
+            binding.btTakeaway.setBackgroundColor(resources.getColor(R.color.light_grey))
+            binding.btTakeaway.setTextColor(resources.getColor(R.color.black))
+
+            deliveryMethode = binding.btDelivery.text.toString()
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun paymentMethod() {
+        binding.btCash.setOnClickListener {
+            binding.btCash.setBackgroundColor(resources.getColor(R.color.light_magenta))
+            binding.btCash.setTextColor(resources.getColor(R.color.white))
+
+            binding.btWallet.setBackgroundColor(resources.getColor(R.color.light_grey))
+            binding.btWallet.setTextColor(resources.getColor(R.color.black))
+
+            paymentMethode = binding.btCash.text.toString()
+        }
+
+        binding.btWallet.setOnClickListener {
+            binding.btWallet.setBackgroundColor(resources.getColor(R.color.light_magenta))
+            binding.btWallet.setTextColor(resources.getColor(R.color.white))
+
+            binding.btCash.setBackgroundColor(resources.getColor(R.color.light_grey))
+            binding.btCash.setTextColor(resources.getColor(R.color.black))
+
+            paymentMethode = binding.btWallet.text.toString()
         }
     }
 

@@ -3,7 +3,6 @@ package com.example.chall3.ui.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +19,8 @@ import com.example.chall3.adapter.VerticalFoodAdapter
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.ui.SettingActivity
-import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.utils.UserPreferences
+import com.example.chall3.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 
@@ -194,12 +193,6 @@ class HomeFragment : Fragment() {
         val currentLayoutValue =
             homeViewModel.isListView.value ?: userPreferences.getLayoutPreferences()
 
-        Log.d(
-            "LayoutPreference",
-            "Current Layout Value: $currentLayoutValue, ${userPreferences.getLayoutPreferences()}"
-        )
-
-
         toggleRecyclerViewLayout(currentLayoutValue)
         toggleImage.setImageResource(if (currentLayoutValue) R.drawable.ic_list else R.drawable.ic_grid)
 
@@ -228,5 +221,4 @@ class HomeFragment : Fragment() {
                 }
             }
     }
-
 }
