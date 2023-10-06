@@ -89,8 +89,6 @@ class OrderFragment : Fragment() {
 
             binding.btWallet.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.btWallet.setTextColor(resources.getColor(R.color.black))
-
-            paymentMethode = binding.btCash.text.toString()
         }
 
         binding.btWallet.setOnClickListener {
@@ -99,8 +97,6 @@ class OrderFragment : Fragment() {
 
             binding.btCash.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.btCash.setTextColor(resources.getColor(R.color.black))
-
-            paymentMethode = binding.btWallet.text.toString()
         }
     }
 
