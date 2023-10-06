@@ -20,9 +20,6 @@ class OrderFragment : Fragment() {
     private lateinit var cartViewModel: CartViewModel
     private lateinit var cartAdapter: CartAdapter
 
-    private var deliveryMethode: String? = null
-    private var paymentMethode: String? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,8 +70,6 @@ class OrderFragment : Fragment() {
 
             binding.btDelivery.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.btDelivery.setTextColor(resources.getColor(R.color.black))
-
-            deliveryMethode = binding.btTakeaway.text.toString()
         }
 
         binding.btDelivery.setOnClickListener {
@@ -83,8 +78,6 @@ class OrderFragment : Fragment() {
 
             binding.btTakeaway.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.btTakeaway.setTextColor(resources.getColor(R.color.black))
-
-            deliveryMethode = binding.btDelivery.text.toString()
         }
     }
 

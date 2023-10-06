@@ -70,8 +70,6 @@
     <string name="hello_binarian">Hello Binarian,</string>
     <string name="feeling_hungry">Feeling hungry?</string>
     <string name="for_you">For you:</string>
-    <string name="account_image">Account Image</string>
-    <string name="cart_image">Cart Image</string>
     <string name="order_now">Treat yourself with the best deal!</string>
     <string name="banner_image">Banner Image</string>
     <string name="food_image">Food Image</string>
@@ -91,12 +89,9 @@
     <string name="free_delivery">FREE DELIVERY!</string>
     <string name="order">Order now</string>
     <string name="_4_8" translatable="false">4.8</string>
-    <string name="see_on_map">See on map</string>
     <string name="home_fragment">Home</string>
     <string name="cart_fragment">Cart</string>
     <string name="profile_fragment">Profile</string>
-    <string name="this_profile_fragment" translatable="false">Profile fragment</string>
-    <string name="this_cart_fragment" translatable="false">Cart fragment</string>
     <string name="delivery_method">Delivery method</string>
     <string name="take_away">Take away</string>
     <string name="delivery">Delivery</string>
@@ -106,7 +101,6 @@
     <string name="place_order">Order</string>
     <string name="notes">Notes</string>
     <string name="note_for">Note for your order (25 characters max)</string>
-    <string name="ok">OK</string>
     <string name="username" translatable="false">Username</string>
     <string name="password" translatable="false">Password</string>
     <string name="email" translatable="false">Email</string>

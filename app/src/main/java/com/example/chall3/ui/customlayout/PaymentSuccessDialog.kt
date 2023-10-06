@@ -8,7 +8,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.example.chall3.R
 import com.example.chall3.databinding.FragmentPaymentSuccessBinding
-import com.example.chall3.ui.fragment.OrderFragment
 
 class PaymentSuccessDialog : DialogFragment() {
 
