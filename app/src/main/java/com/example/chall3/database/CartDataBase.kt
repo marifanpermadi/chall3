@@ -21,7 +21,7 @@ abstract class CartDataBase : RoomDatabase() {
                         context.applicationContext,
                         CartDataBase::class.java, "cart_database"
                     )
-                        .addMigrations(Migration2to3())
+                        //.addMigrations(Migration2to3())
                         .build()
                 }
             }

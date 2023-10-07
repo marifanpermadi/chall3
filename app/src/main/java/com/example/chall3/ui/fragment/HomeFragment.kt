@@ -3,31 +3,41 @@ package com.example.chall3.ui.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
 import com.example.chall3.adapter.HorizontalFoodAdapter
+import com.example.chall3.adapter.MenuAdapter
 import com.example.chall3.adapter.VerticalFoodAdapter
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.ui.SettingActivity
 import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
+import com.example.chall3.viewmodel.MenuViewModel
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
-    private lateinit var verticalFoodAdapter: VerticalFoodAdapter
+    private lateinit var menuAdapter: MenuAdapter
+
+    private val menuViewModel: MenuViewModel by viewModels {
+        MenuViewModel.ViewModelFactory()
+    }
 
     private val listHorizontal = ArrayList<Foods>()
     private val listVertical = ArrayList<Foods>()
@@ -38,14 +48,24 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        userPreferences = UserPreferences(requireContext())
+        //userPreferences = UserPreferences(requireContext())
 
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
+        //homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
-        verticalFoodAdapter =
-            VerticalFoodAdapter(listVertical, homeViewModel.isListView.value ?: true)
-        binding.rvVertical.adapter = verticalFoodAdapter
+        menuAdapter = MenuAdapter ()
+
+        menuViewModel.getListMenu().observe(viewLifecycleOwner) { dataMenu ->
+            if (dataMenu != null) {
+                menuAdapter.submitData(lifecycle, dataMenu)
+            }
+        }
+
+        binding.rvVertical.setHasFixedSize(true)
+        binding.rvVertical.layoutManager = GridLayoutManager(requireActivity(), 2)
+        binding.rvVertical.adapter = menuAdapter
+
+
 
 
         binding.rvHorizontal.setHasFixedSize(true)
@@ -54,26 +74,29 @@ class HomeFragment : Fragment() {
         }
         showRecyclerListHorizontal()
 
-        binding.rvVertical.setHasFixedSize(true)
-        if (listVertical.isEmpty()) {
-            listVertical.addAll(getListFoodsVertical())
-        }
-        showRecyclerListVertical()
-
-        homeViewModel.isListView.observe(viewLifecycleOwner) {
+        /*homeViewModel.isListView.observe(viewLifecycleOwner) {
             toggleLayout()
-        }
+        */
 
-        homeViewModel.foodItems.observe(viewLifecycleOwner) { foodItems ->
+        /*homeViewModel.foodItems.observe(viewLifecycleOwner) { foodItems ->
             updateRecyclerView(foodItems)
-        }
+        }*/
 
-        toggleLayout()
-        itemClicked()
         onBackPressed()
         settingActivity()
 
         return binding.root
+    }
+
+    private fun getListMenu() {
+        val adapter = MenuAdapter ()
+        binding.rvVertical.adapter = adapter
+
+        menuViewModel.getListMenu().observe(viewLifecycleOwner) {
+            if (it != null) {
+                adapter.submitData(lifecycle, it)
+            }
+        }
     }
 
     private fun getListFoodsHorizontal(): ArrayList<Foods> {
@@ -135,15 +158,15 @@ class HomeFragment : Fragment() {
         return listFood
     }
 
-    private fun showRecyclerListVertical() {
+    /*private fun showRecyclerListVertical() {
         binding.rvVertical.layoutManager =
             GridLayoutManager(requireActivity(), 2)
         val listFoodAdapter = VerticalFoodAdapter(listVertical)
         binding.rvVertical.adapter = listFoodAdapter
-    }
+    }*/
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun toggleRecyclerViewLayout(isListView: Boolean) {
+    /*private fun toggleRecyclerViewLayout(isListView: Boolean) {
 
         if (isListView) {
             showGrid()
@@ -154,41 +177,41 @@ class HomeFragment : Fragment() {
         binding.ivToggle.setImageResource(
             if (isListView) R.drawable.ic_list else R.drawable.ic_grid
         )
-    }
+    }*/
 
-    private fun itemClicked() {
+    /*private fun itemClicked() {
         verticalFoodAdapter =
             VerticalFoodAdapter(listVertical, homeViewModel.isListView.value ?: true) { item ->
                 val bundle = bundleOf("item" to item)
                 findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
             }
         binding.rvVertical.adapter = verticalFoodAdapter
-    }
+    }*/
 
-    private fun showGrid() {
+    /*private fun showGrid() {
         binding.rvVertical.layoutManager =
             GridLayoutManager(requireActivity(), 2)
         verticalFoodAdapter.isGridMode = true
         binding.rvVertical.adapter = verticalFoodAdapter
-    }
+    }*/
 
-    private fun showLinear() {
+    /*private fun showLinear() {
         binding.rvVertical.layoutManager =
             LinearLayoutManager(requireActivity())
         verticalFoodAdapter.isGridMode = false
         binding.rvVertical.adapter = verticalFoodAdapter
-    }
+    }*/
 
-    @SuppressLint("NotifyDataSetChanged")
+   /* @SuppressLint("NotifyDataSetChanged")
     private fun updateRecyclerView(foodItems: ArrayList<Foods>) {
 
         verticalFoodAdapter.updateData(foodItems)
         verticalFoodAdapter.isGridMode = homeViewModel.isListView.value ?: true
         binding.rvVertical.adapter?.notifyDataSetChanged()
 
-    }
+    }*/
 
-    private fun toggleLayout() {
+   /* private fun toggleLayout() {
         val toggleImage = binding.ivToggle
         val currentLayoutValue =
             homeViewModel.isListView.value ?: userPreferences.getLayoutPreferences()
@@ -201,7 +224,7 @@ class HomeFragment : Fragment() {
             homeViewModel.isListView.value = newListViewValue
             userPreferences.saveLayoutPreferences(newListViewValue)
         }
-    }
+    }*/
 
     private fun settingActivity() {
         binding.ivSetting.setOnClickListener {

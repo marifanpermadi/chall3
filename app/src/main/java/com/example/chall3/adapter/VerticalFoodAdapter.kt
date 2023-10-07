@@ -46,7 +46,6 @@ class VerticalFoodAdapter(
         val price: TextView = itemView.findViewById(R.id.tv_price)
         val imgName: TextView = itemView.findViewById(R.id.tv_desc)
         val imgStar: MaterialButton = itemView.findViewById(R.id.bt_star)
-
     }
 
     @SuppressLint("NotifyDataSetChanged")

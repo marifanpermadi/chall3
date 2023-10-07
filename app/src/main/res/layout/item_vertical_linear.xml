@@ -70,18 +70,21 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv_desc"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_price" />
 
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginStart="3dp"
             android:text="@string/_10_000"
-            android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textColor="@color/orange_dark"
+            android:textStyle="bold"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/tv_rp"
-            app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
