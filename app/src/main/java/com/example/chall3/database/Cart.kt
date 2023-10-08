@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 data class Cart(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-    var foodImage: Int,
+    var foodImage: String,
     var foodName: String,
     var foodPrice: Int,
     var orderNote: String ? = null,

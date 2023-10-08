@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.database.Cart
-import com.example.chall3.model.Foods
 import com.example.chall3.repository.CartRepository
 
 class DetailViewModel(application: Application) : ViewModel() {
@@ -71,7 +70,7 @@ class DetailViewModel(application: Application) : ViewModel() {
                 totalPrice.value?.let { it1 ->
                     currentAmount.value?.let { it2 ->
                         Cart(
-                            foodImage = it.harga,
+                            foodImage = it.imageUrl,
                             foodName = it.nama,
                             foodPrice = it1,
                             orderNote = getOrderNote(),

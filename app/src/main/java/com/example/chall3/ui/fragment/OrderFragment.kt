@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
 import com.example.chall3.adapter.CartAdapter
+import com.example.chall3.data.apimodel.OrderItem
+import com.example.chall3.data.apimodel.OrderRequest
 import com.example.chall3.databinding.FragmentOrderBinding
 import com.example.chall3.ui.customlayout.PaymentSuccessDialog
 import com.example.chall3.viewmodel.CartViewModel
@@ -42,6 +45,17 @@ class OrderFragment : Fragment() {
             binding.tvSumTotal.text = it.toString()
         }
 
+        cartViewModel.orderPlacedLiveData.observe(viewLifecycleOwner) {
+            if (it) {
+                val dialogFragment = PaymentSuccessDialog()
+                dialogFragment.show(childFragmentManager, "PaymentSuccessDialog")
+            }
+        }
+
+        cartViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
         deliveryMethod()
         paymentMethod()
         payNow()
@@ -56,9 +70,19 @@ class OrderFragment : Fragment() {
 
     private fun payNow() {
         binding.btPay.setOnClickListener {
-            val dialogFragment = PaymentSuccessDialog()
-            dialogFragment.show(childFragmentManager, "PaymentSuccessDialog")
-            cartViewModel.deleteAllItems()
+
+            val orderItems = cartViewModel.allCartItems.value ?: emptyList()
+            if (orderItems.isNotEmpty()) {
+                val total = cartViewModel.totalPrice.value ?: 0
+                val orderRequest = OrderRequest("Agus",total,orderItems.map {
+                    OrderItem(it.foodName, it.orderAmount, it.orderNote ?: "", it.foodPrice)
+                })
+
+                cartViewModel.placeOrder(orderRequest)
+
+            } else {
+                Toast.makeText(requireContext(),"Your cart is empty", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -98,6 +122,10 @@ class OrderFragment : Fragment() {
             binding.btCash.setBackgroundColor(resources.getColor(R.color.light_grey))
             binding.btCash.setTextColor(resources.getColor(R.color.black))
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
 }

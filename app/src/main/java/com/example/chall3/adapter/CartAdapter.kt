@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.chall3.R
 import com.example.chall3.database.Cart
 import com.example.chall3.databinding.ItemCartBinding
@@ -72,9 +73,13 @@ class CartAdapter(
         val tvPrice: TextView = itemView.findViewById(R.id.tv_price)
 
         fun bind(cartItem: Cart) {
+
+            Glide.with(itemView.context)
+                .load(cartItem.foodImage)
+                .into(binding.ivFood)
+
             binding.tvDesc.text = cartItem.foodName
-            binding.ivFood.setImageResource(cartItem.foodImage)
-            binding.tvPrice.text = cartItem.foodPrice.toString()
+            binding.tvPrice.text = cartItem.basePrice.toString()
             binding.tvNote.text = cartItem.orderNote
             binding.tvNumber.text = cartItem.orderAmount.toString()
         }

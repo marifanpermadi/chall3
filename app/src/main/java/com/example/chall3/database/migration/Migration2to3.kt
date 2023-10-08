@@ -1,4 +1,4 @@
-package com.example.chall3.database
+package com.example.chall3.database.migration
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
