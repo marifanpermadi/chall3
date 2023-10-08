@@ -15,11 +15,46 @@ class MenuPagingRepository(
     fun getDataForPaging(): LiveData<PagingData<DataMenu>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 1
+                pageSize = 1,
+                maxSize = 22,
+                enablePlaceholders = false
             ),
             pagingSourceFactory = {
                 PagingSource(apiService)
             }
         ).liveData
     }
+
+    fun getDataForPagingByCategory(category: String): LiveData<PagingData<DataMenu>> {
+
+        val maximal: Int = when (category) {
+            "Mie" -> {
+                11
+            }
+
+            "Minuman" -> {
+                3
+            }
+
+            "Burger" -> {
+                3
+            }
+
+            else -> {
+                7
+            }
+        }
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = 0,
+                maxSize = maximal,
+                enablePlaceholders = true
+            ),
+            pagingSourceFactory = {
+                PagingSource(apiService, category)
+            }
+        ).liveData
+    }
+
 }

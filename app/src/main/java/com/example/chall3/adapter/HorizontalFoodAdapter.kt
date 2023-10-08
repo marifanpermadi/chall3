@@ -7,10 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chall3.R
-import com.example.chall3.model.Foods
+import com.example.chall3.model.MenuCategory
 
 class HorizontalFoodAdapter(
-    private val listFood: ArrayList<Foods>
+    private val listFood: ArrayList<MenuCategory>,
+    private val onCategoryClickListener: (String) -> Unit
 ) : RecyclerView.Adapter<HorizontalFoodAdapter.ListViewHolder>() {
 
 
@@ -23,9 +24,13 @@ class HorizontalFoodAdapter(
     override fun getItemCount(): Int = listFood.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (name, _, photo, _, _) = listFood[position]
-        holder.imgPhoto.setImageResource(photo)
+        val (name, image) = listFood[position]
+        holder.imgPhoto.setImageResource(image)
         holder.imgName.text = name
+
+        holder.itemView.setOnClickListener {
+            onCategoryClickListener(name)
+        }
 
     }
 

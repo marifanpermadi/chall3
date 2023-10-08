@@ -18,7 +18,6 @@ import com.example.chall3.ui.fragment.HomeFragmentDirections
 
 class MenuAdapter(
     var isGridMode: Boolean = true,
-    //private val onItemClick: (DataMenu) -> Unit
 ) : PagingDataAdapter<DataMenu, MenuAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -67,7 +66,7 @@ class MenuAdapter(
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataMenu>() {
             override fun areItemsTheSame(oldItem: DataMenu, newItem: DataMenu): Boolean {
-                return oldItem == newItem
+                return oldItem.nama == newItem.nama
             }
 
             override fun areContentsTheSame(oldItem: DataMenu, newItem: DataMenu): Boolean {

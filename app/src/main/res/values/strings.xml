@@ -2,69 +2,17 @@
 
     <string-array name="data_name">
         <item>Burger</item>
-        <item>Pizza</item>
-        <item>Salad</item>
-        <item>Soto</item>
-        <item>Bakso</item>
-        <item>Noodle</item>
-        <item>Juice</item>
-        <item>Satay</item>
+        <item>Snack</item>
+        <item>Mie</item>
+        <item>Minuman</item>
     </string-array>
-
-    <integer-array name="data_price">
-        <item>10000</item>
-        <item>15000</item>
-        <item>20000</item>
-        <item>15000</item>
-        <item>10000</item>
-        <item>50000</item>
-        <item>15000</item>
-        <item>20000</item>
-    </integer-array>
 
     <integer-array name="data_photo">
         <item>@drawable/burger</item>
         <item>@drawable/pizza</item>
-        <item>@drawable/salad</item>
-        <item>@drawable/soto</item>
-        <item>@drawable/bakso</item>
         <item>@drawable/noodle</item>
         <item>@drawable/jus</item>
-        <item>@drawable/satay</item>
     </integer-array>
-
-    <string-array name="data_description">
-        <item>A huge single or triple burger with all the fixings, cheese, lettuce, tomato, onions and special sauce or mayonnaise!</item>
-        <item>A flat, open-faced baked pie of Italian origin, consisting of a thin layer of bread dough topped with spiced tomato sauce and cheese, often garnished with anchovies, sausage slices, mushrooms, etc.</item>
-        <item>A visually captivating culinary masterpiece that combines crisp greens, vibrant vegetables, proteins, crunchy croutons, and velvety dressing to create a harmonious and unforgettable gastronomic experience.</item>
-        <item>A cherished Indonesian soup, features a fragrant broth infused with lemongrass and spices, tender chicken or beef, delicate noodles, and a medley of garnishes, offering a flavorful journey through Indonesian culinary traditions in a bowl.</item>
-        <item>A quintessential Indonesian street food, boasts a flavorful broth infused with aromatic spices, tender meatballs, springy noodles, and a medley of condiments, creating a symphony of taste and tradition in a single bowl.</item>
-        <item>A global culinary staple, are a versatile canvas for culinary creativity, offering a comforting and satisfying foundation for a myriad of flavors and textures.</item>
-        <item>A refreshing elixir of natures bounty, captures the essence of ripe fruits and vibrant vegetables, offering a vibrant burst of flavor and a healthy dose of nourishment in every sip.</item>
-        <item>A beloved Indonesian delight, showcases succulent skewered meats, marinated to perfection and grilled over open flames, while bathed in a fragrant peanut sauce, creating a tantalizing fusion of smoky, sweet, and savory flavors that transport your taste buds to exotic destinations</item>
-    </string-array>
-
-    <string-array name="data_star">
-        <item>4.8</item>
-        <item>4.7</item>
-        <item>4.9</item>
-        <item>4.4</item>
-        <item>4.5</item>
-        <item>4.8</item>
-        <item>4.6</item>
-        <item>5.0</item>
-    </string-array>
-
-    <string-array name="data_address">
-        <item>Jl. Kemang Raya No.77, RT.4/RW.2, Bangka, Kec. Mampang Prpt., Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12730</item>
-        <item>Jl. M.H. Thamrin No.28 – 30, RT.9/RW.5, Gondangdia, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10350</item>
-        <item>Jl. M.H. Thamrin No.1, Kb. Melati, Kec. Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10230</item>
-        <item>Ps. Slipi, Jl. Anggrek Garuda D/I No.4, RT.4/RW.2, Kemanggisan, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11480</item>
-        <item>Jl. Aip II Karel Sat-Suit Tubun IIB No.5A, RT.7/RW.2, Slipi, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11410</item>
-        <item>Jl. Tanjung Duren Raya No.135a, Tj. Duren Sel., Kec. Grogol petamburan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11470</item>
-        <item>Taman S. Parman No.3, RT.6/RW.16, Tomang, Kec. Grogol petamburan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11440</item>
-        <item>Jl. Kembangan Raya No.24, RT.1/RW.2, Kembangan Sel., Kec. Kembangan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11610</item>
-    </string-array>
 
     <string name="app_name" translatable="false">chall3</string>
     <string name="hello_binarian">Hello Binarian,</string>

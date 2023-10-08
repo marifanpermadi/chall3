@@ -17,6 +17,9 @@ class MenuViewModel(
     fun getListMenu(): LiveData<PagingData<DataMenu>> =
         repository.getDataForPaging().cachedIn(viewModelScope)
 
+    fun getMenuByCategory(category: String): LiveData<PagingData<DataMenu>> =
+        repository.getDataForPagingByCategory(category).cachedIn(viewModelScope)
+
     @Suppress("UNCHECKED_CAST")
     class ViewModelFactory: ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -3,30 +3,28 @@ package com.example.chall3.ui.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
 import com.example.chall3.adapter.HorizontalFoodAdapter
 import com.example.chall3.adapter.MenuAdapter
-import com.example.chall3.adapter.VerticalFoodAdapter
 import com.example.chall3.databinding.FragmentHomeBinding
-import com.example.chall3.model.Foods
+import com.example.chall3.model.MenuCategory
 import com.example.chall3.ui.SettingActivity
 import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.viewmodel.MenuViewModel
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -39,8 +37,7 @@ class HomeFragment : Fragment() {
         MenuViewModel.ViewModelFactory()
     }
 
-    private val listHorizontal = ArrayList<Foods>()
-    private val listVertical = ArrayList<Foods>()
+    private val listHorizontal = ArrayList<MenuCategory>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,40 +45,26 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        //userPreferences = UserPreferences(requireContext())
+        userPreferences = UserPreferences(requireContext())
 
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        //homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
+        homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
-        menuAdapter = MenuAdapter ()
-
-        menuViewModel.getListMenu().observe(viewLifecycleOwner) { dataMenu ->
-            if (dataMenu != null) {
-                menuAdapter.submitData(lifecycle, dataMenu)
-            }
-        }
-
+        menuAdapter = MenuAdapter()
         binding.rvVertical.setHasFixedSize(true)
-        binding.rvVertical.layoutManager = GridLayoutManager(requireActivity(), 2)
-        binding.rvVertical.adapter = menuAdapter
-
-
-
+        getListMenu()
 
         binding.rvHorizontal.setHasFixedSize(true)
         if (listHorizontal.isEmpty()) {
             listHorizontal.addAll(getListFoodsHorizontal())
         }
-        showRecyclerListHorizontal()
+        setupRecyclerListHorizontal()
 
-        /*homeViewModel.isListView.observe(viewLifecycleOwner) {
+        homeViewModel.isListView.observe(viewLifecycleOwner) {
             toggleLayout()
-        */
+        }
 
-        /*homeViewModel.foodItems.observe(viewLifecycleOwner) { foodItems ->
-            updateRecyclerView(foodItems)
-        }*/
-
+        showAllMenu()
         onBackPressed()
         settingActivity()
 
@@ -89,84 +72,72 @@ class HomeFragment : Fragment() {
     }
 
     private fun getListMenu() {
-        val adapter = MenuAdapter ()
-        binding.rvVertical.adapter = adapter
+        binding.rvVertical.layoutManager = GridLayoutManager(requireActivity(), 2)
+        binding.rvVertical.adapter = menuAdapter
 
-        menuViewModel.getListMenu().observe(viewLifecycleOwner) {
-            if (it != null) {
-                adapter.submitData(lifecycle, it)
+        showShimmerEffect()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            menuViewModel.getListMenu().observe(viewLifecycleOwner) { dataMenu ->
+                if (dataMenu != null) {
+                    hideShimmerEffect()
+                    menuAdapter.submitData(lifecycle, dataMenu)
+                }
+            }
+        }, DELAY)
+    }
+
+    private fun getMenuByCategory(category: String) {
+        menuViewModel.getMenuByCategory(category).observe(viewLifecycleOwner) { dataMenu ->
+            showShimmerEffect()
+            if (dataMenu != null) {
+                hideShimmerEffect()
+                menuAdapter.submitData(lifecycle, dataMenu)
             }
         }
     }
 
-    private fun getListFoodsHorizontal(): ArrayList<Foods> {
-        val dataName = resources.getStringArray(R.array.data_name)
-        val dataPrice = resources.getIntArray(R.array.data_price)
-        val dataDesc = resources.getStringArray(R.array.data_description)
-        val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
-        val dataStar = resources.getStringArray(R.array.data_star)
-        val dataAddress = resources.getStringArray(R.array.data_address)
+    private fun showAllMenu() {
+        binding.ivAll.setOnClickListener {
+            binding.rvVertical.adapter = menuAdapter
 
-        val listFood = ArrayList<Foods>()
+            menuViewModel.getListMenu().observe(viewLifecycleOwner) { dataMenu ->
+                if (dataMenu != null) {
+                    menuAdapter.submitData(lifecycle, dataMenu)
+                }
+            }
+        }
+    }
+
+    private fun getListFoodsHorizontal(): ArrayList<MenuCategory> {
+        val dataName = resources.getStringArray(R.array.data_name)
+        val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
+
+        val listFood = ArrayList<MenuCategory>()
         for (i in dataName.indices) {
-            val food = Foods(
+            val food = MenuCategory(
                 dataName[i],
-                dataPrice[i],
-                dataPhoto.getResourceId(i, -1),
-                dataDesc[i],
-                dataStar[i],
-                dataAddress[i]
+                dataPhoto.getResourceId(i, -1)
             )
             listFood.add(food)
         }
-
         dataPhoto.recycle()
 
         return listFood
     }
 
-    private fun showRecyclerListHorizontal() {
+    private fun setupRecyclerListHorizontal() {
         binding.rvHorizontal.layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        val listFoodAdapter = HorizontalFoodAdapter(listHorizontal)
-        binding.rvHorizontal.adapter = listFoodAdapter
-    }
-
-    private fun getListFoodsVertical(): ArrayList<Foods> {
-        val dataName = resources.getStringArray(R.array.data_name)
-        val dataPrice = resources.getIntArray(R.array.data_price)
-        val dataDesc = resources.getStringArray(R.array.data_description)
-        val dataPhoto = resources.obtainTypedArray(R.array.data_photo)
-        val dataStar = resources.getStringArray(R.array.data_star)
-        val dataAddress = resources.getStringArray(R.array.data_address)
-
-        val listFood = ArrayList<Foods>()
-        for (i in dataName.indices) {
-            val food = Foods(
-                dataName[i],
-                dataPrice[i],
-                dataPhoto.getResourceId(i, -1),
-                dataDesc[i],
-                dataStar[i],
-                dataAddress[i]
-            )
-            listFood.add(food)
+        val horizontalAdapter = HorizontalFoodAdapter(listHorizontal) {
+            getMenuByCategory(it.lowercase())
+            Log.d("Category clicked", it)
         }
-
-        dataPhoto.recycle()
-
-        return listFood
+        binding.rvHorizontal.adapter = horizontalAdapter
     }
-
-    /*private fun showRecyclerListVertical() {
-        binding.rvVertical.layoutManager =
-            GridLayoutManager(requireActivity(), 2)
-        val listFoodAdapter = VerticalFoodAdapter(listVertical)
-        binding.rvVertical.adapter = listFoodAdapter
-    }*/
 
     @SuppressLint("NotifyDataSetChanged")
-    /*private fun toggleRecyclerViewLayout(isListView: Boolean) {
+    private fun toggleRecyclerViewLayout(isListView: Boolean) {
 
         if (isListView) {
             showGrid()
@@ -177,7 +148,7 @@ class HomeFragment : Fragment() {
         binding.ivToggle.setImageResource(
             if (isListView) R.drawable.ic_list else R.drawable.ic_grid
         )
-    }*/
+    }
 
     /*private fun itemClicked() {
         verticalFoodAdapter =
@@ -188,30 +159,44 @@ class HomeFragment : Fragment() {
         binding.rvVertical.adapter = verticalFoodAdapter
     }*/
 
-    /*private fun showGrid() {
+    private fun showGrid() {
         binding.rvVertical.layoutManager =
             GridLayoutManager(requireActivity(), 2)
-        verticalFoodAdapter.isGridMode = true
-        binding.rvVertical.adapter = verticalFoodAdapter
-    }*/
+        menuAdapter.isGridMode = true
+        binding.rvVertical.adapter = menuAdapter
+    }
 
-    /*private fun showLinear() {
+    private fun showLinear() {
         binding.rvVertical.layoutManager =
             LinearLayoutManager(requireActivity())
-        verticalFoodAdapter.isGridMode = false
-        binding.rvVertical.adapter = verticalFoodAdapter
-    }*/
+        menuAdapter.isGridMode = false
+        binding.rvVertical.adapter = menuAdapter
+    }
 
-   /* @SuppressLint("NotifyDataSetChanged")
-    private fun updateRecyclerView(foodItems: ArrayList<Foods>) {
+    /* @SuppressLint("NotifyDataSetChanged")
+     private fun updateRecyclerView(foodItems: ArrayList<Foods>) {
 
-        verticalFoodAdapter.updateData(foodItems)
-        verticalFoodAdapter.isGridMode = homeViewModel.isListView.value ?: true
-        binding.rvVertical.adapter?.notifyDataSetChanged()
+         verticalFoodAdapter.updateData(foodItems)
+         verticalFoodAdapter.isGridMode = homeViewModel.isListView.value ?: true
+         binding.rvVertical.adapter?.notifyDataSetChanged()
 
-    }*/
+     }*/
 
-   /* private fun toggleLayout() {
+    private fun showShimmerEffect() {
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+        binding.shimmerFrameLayout.startShimmer()
+        Log.d("Shimmer", "Shimmer executed")
+        binding.rvVertical.visibility = View.GONE
+    }
+
+    private fun hideShimmerEffect() {
+        binding.shimmerFrameLayout.stopShimmer()
+        Log.d("Shimmer", "Shimmer stopped")
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.rvVertical.visibility = View.VISIBLE
+    }
+
+    private fun toggleLayout() {
         val toggleImage = binding.ivToggle
         val currentLayoutValue =
             homeViewModel.isListView.value ?: userPreferences.getLayoutPreferences()
@@ -224,7 +209,7 @@ class HomeFragment : Fragment() {
             homeViewModel.isListView.value = newListViewValue
             userPreferences.saveLayoutPreferences(newListViewValue)
         }
-    }*/
+    }
 
     private fun settingActivity() {
         binding.ivSetting.setOnClickListener {
@@ -243,5 +228,9 @@ class HomeFragment : Fragment() {
                     navController.navigateUp()
                 }
             }
+    }
+
+    companion object {
+        const val DELAY = 3000L
     }
 }

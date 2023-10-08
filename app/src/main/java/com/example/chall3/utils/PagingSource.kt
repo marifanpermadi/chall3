@@ -4,10 +4,11 @@ import androidx.paging.PagingState
 import androidx.paging.PagingSource
 import com.example.chall3.data.api.ApiService
 import com.example.chall3.data.apimodel.DataMenu
-import java.io.IOException
+import com.example.chall3.data.apimodel.ListMenuResponse
 
 class PagingSource(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val category: String ?= null
 ) : PagingSource<Int, DataMenu>() {
 
     override fun getRefreshKey(state: PagingState<Int, DataMenu>): Int? {
@@ -20,16 +21,17 @@ class PagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DataMenu> {
         return try {
             val page = params.key ?: INITIAL_PAGE_INDEX
-            val responseData = apiService.getListMenu()
+            val responseData: ListMenuResponse = if (category != null) {
+                apiService.getMenuByCategory(category)
+            } else {
+                apiService.getListMenu()
+            }
 
             LoadResult.Page(
                 data = responseData.data,
                 prevKey = if (page == INITIAL_PAGE_INDEX) null else page - 1,
-                nextKey = if (responseData.data.isEmpty()) null else page + 1
+                nextKey = if (responseData.data.size == 22) null else page + 1
             )
-
-
-
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }
