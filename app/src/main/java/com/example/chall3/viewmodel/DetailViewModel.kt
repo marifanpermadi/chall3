@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.database.Cart
 import com.example.chall3.model.Foods
 import com.example.chall3.repository.CartRepository
@@ -19,7 +20,7 @@ class DetailViewModel(application: Application) : ViewModel() {
     private val _orderNote = MutableLiveData<String?>()
     val orderNote: LiveData<String?> = _orderNote
 
-    private val _selectedItem = MutableLiveData<Foods>()
+    private val _selectedItem = MutableLiveData<DataMenu>()
 
     private val cartRepository: CartRepository
 
@@ -27,9 +28,9 @@ class DetailViewModel(application: Application) : ViewModel() {
         cartRepository = CartRepository(application)
     }
 
-    fun initSelectedItem(item: Foods) {
+    fun initSelectedItem(item: DataMenu) {
         _selectedItem.value = item
-        _totalPrice.value = item.price
+        _totalPrice.value = item.harga
     }
 
     fun setCurrentAmount(amount: Int) {
@@ -41,7 +42,7 @@ class DetailViewModel(application: Application) : ViewModel() {
         val currentAmount = _currentAmount.value ?: 1
         val selectedItem = _selectedItem.value
         if (selectedItem != null) {
-            val totalPrice = selectedItem.price * currentAmount
+            val totalPrice = selectedItem.harga * currentAmount
             _totalPrice.value = totalPrice
         }
     }
@@ -70,12 +71,12 @@ class DetailViewModel(application: Application) : ViewModel() {
                 totalPrice.value?.let { it1 ->
                     currentAmount.value?.let { it2 ->
                         Cart(
-                            foodImage = it.photo,
-                            foodName = it.name,
+                            foodImage = it.harga,
+                            foodName = it.nama,
                             foodPrice = it1,
                             orderNote = getOrderNote(),
                             orderAmount = it2,
-                            basePrice = it.price
+                            basePrice = it.harga
                         )
                     }
                 }

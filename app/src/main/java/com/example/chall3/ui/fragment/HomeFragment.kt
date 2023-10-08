@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
 import com.example.chall3.adapter.HorizontalFoodAdapter
 import com.example.chall3.adapter.MenuAdapter
+import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.model.MenuCategory
 import com.example.chall3.ui.SettingActivity
@@ -26,7 +28,7 @@ import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.viewmodel.MenuViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
@@ -50,7 +52,7 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
-        menuAdapter = MenuAdapter()
+        menuAdapter = MenuAdapter(listener = this)
         binding.rvVertical.setHasFixedSize(true)
         getListMenu()
 
@@ -230,7 +232,14 @@ class HomeFragment : Fragment() {
             }
     }
 
+    override fun onItemClick(data: DataMenu) {
+        val bundle = bundleOf("item" to data)
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+    }
+
     companion object {
         const val DELAY = 3000L
     }
+
+
 }

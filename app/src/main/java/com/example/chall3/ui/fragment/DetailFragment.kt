@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.chall3.R
+import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.DetailViewModel
@@ -27,7 +29,7 @@ class DetailFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var detailViewModel: DetailViewModel
 
-    private var item: Foods? = null
+    private var item: DataMenu? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,13 +68,18 @@ class DetailFragment : Fragment() {
         item = arguments?.getParcelable("item")
 
         item?.let {
-            binding.ivImage.setImageResource(it.photo)
-            binding.tvFoodPrice.text = item?.price.toString()
-            binding.tvFoodName.text = item?.name
-            binding.tvDesc.text = item?.description
-            binding.btStar.text = item?.star
-            binding.tvLocationDesc.text = item?.address
-            binding.tvTotal.text = item?.price.toString()
+
+            val image = binding.ivImage
+
+            Glide.with(requireContext())
+                .load(it.imageUrl)
+                .into(image)
+
+            binding.tvFoodPrice.text = item?.harga.toString()
+            binding.tvFoodName.text = item?.nama
+            binding.tvDesc.text = item?.detail
+            binding.tvLocationDesc.text = item?.alamatResto
+            binding.tvTotal.text = item?.harga.toString()
 
             detailViewModel.initSelectedItem(it)
         }
@@ -100,16 +107,17 @@ class DetailFragment : Fragment() {
 
     private fun seeOnMaps() {
         @Suppress("DEPRECATION")
-        val item = arguments?.getParcelable<Foods>("item")
+        val item = arguments?.getParcelable<DataMenu>("item")
 
         binding.btMaps.setOnClickListener {
-            val address = item?.address
+            val address = item?.alamatResto
             val map = "http://maps.google.co.in/maps?q=$address"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(map))
             startActivity(intent)
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun iconBackClicked() {
         binding.ivBack.setOnClickListener {
             requireActivity().onBackPressed()
@@ -163,13 +171,13 @@ class DetailFragment : Fragment() {
         binding.etNote.text?.clear()
 
         detailViewModel.setCurrentAmount(1)
-        item?.let { detailViewModel.clearTotalPrice(it.price) }
+        item?.let { detailViewModel.clearTotalPrice(it.harga) }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
         detailViewModel.setCurrentAmount(1)
-        item?.let { detailViewModel.clearTotalPrice(it.price) }
+        item?.let { detailViewModel.clearTotalPrice(it.harga) }
     }
 }
