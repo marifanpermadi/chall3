@@ -87,5 +87,12 @@
     <string name="login_now">Login now and get the benefit!</string>
     <string name="don_t_have">Don\'t have an account?</string>
     <string name="register">Register</string>
+    <string name="join_us">Join us and explore the taste!</string>
+    <string name="field_can_not_be_empty">This field can not be empty</string>
+    <string name="phone_number">Phone number</string>
+    <string name="login">Login</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="register_succed">Registration successful. Please login using your registered account</string>
+    <string name="register_failed">Registration failed. Please cek your data again</string>
 
 </resources>

@@ -9,13 +9,13 @@ import java.util.UUID
  */
 class LoginDataSource {
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(username: String, password: String): ResultLogin<LoggedInUser> {
         try {
             // TODO: handle loggedInUser authentication
             val fakeUser = LoggedInUser(UUID.randomUUID().toString(), "Jane Doe")
-            return Result.Success(fakeUser)
+            return ResultLogin.Success(fakeUser)
         } catch (e: Throwable) {
-            return Result.Error(IOException("Error logging in", e))
+            return ResultLogin.Error(IOException("Error logging in", e))
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.chall3.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.chall3.R
 import com.example.chall3.databinding.ActivityLoginBinding
+import com.example.chall3.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -51,12 +53,21 @@ class LoginActivity : AppCompatActivity() {
 
         isDataValid()
         login()
+        moveToRegister()
     }
 
     private fun login() {
         binding.btLogin!!.setOnClickListener {
             Log.d("BtLogin", "Button clicked, ${isDataValid()}")
 
+        }
+    }
+
+    private fun moveToRegister() {
+        binding.tvRegHere!!.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

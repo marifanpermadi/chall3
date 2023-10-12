@@ -5,8 +5,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -14,10 +12,8 @@ import androidx.core.content.ContextCompat
 import com.example.chall3.R
 import com.google.android.material.textfield.TextInputEditText
 
-class PasswordEditText : TextInputEditText, View.OnTouchListener {
-
-    private var isPasswordValid = false
-    private lateinit var toggleIcon: Drawable
+class GeneralEditText : TextInputEditText, View.OnTouchListener {
+    private lateinit var clearButton: Drawable
 
     constructor(context: Context) : super(context) {
         init()
@@ -37,19 +33,15 @@ class PasswordEditText : TextInputEditText, View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        showToggleIcon()
         setBackgroundResource(R.drawable.custom_border)
         textSize = 17f
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 
     private fun init() {
-        toggleIcon =
-            ContextCompat.getDrawable(context, R.drawable.ic_visibility_off) as Drawable
+        clearButton = ContextCompat.getDrawable(context, R.drawable.ic_clear) as Drawable
 
         setOnTouchListener(this)
-
-        transformationMethod = PasswordTransformationMethod.getInstance()
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -57,29 +49,24 @@ class PasswordEditText : TextInputEditText, View.OnTouchListener {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                isPasswordValid = s.length >= 5
             }
 
             override fun afterTextChanged(s: Editable) {
-
-                if (s.toString().length < 5) showError()
+                if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
+                if (s.toString().isEmpty()) showError()
             }
         })
     }
 
     private fun showError() {
-        error = context.getString(R.string.invalid_password)
+        error = context.getString(R.string.field_can_not_be_empty)
     }
 
-    fun isPasswordValid(): Boolean {
-        return isPasswordValid
+    private fun showClearButton() {
+        setButtonDrawables(endOfTheText = clearButton)
     }
 
-    private fun showToggleIcon() {
-        setButtonDrawables(endOfTheText = toggleIcon)
-    }
-
-    private fun hideToggleIcon() {
+    private fun hideClearButton() {
         setButtonDrawables()
     }
 
@@ -97,40 +84,38 @@ class PasswordEditText : TextInputEditText, View.OnTouchListener {
         )
     }
 
-
-    override fun onTouch(p0: View?, event: MotionEvent): Boolean {
+    override fun onTouch(v: View?, event: MotionEvent): Boolean {
         if (compoundDrawables[2] != null) {
-            val toggleIconStart: Float
-            val toggleIconEnd: Float
-            var isToggleIconClicked = false
+            val clearButtonStart: Float
+            val clearButtonEnd: Float
+            var isClearButtonClicked = false
 
             if (layoutDirection == View.LAYOUT_DIRECTION_RTL) {
-                toggleIconEnd = (toggleIcon.intrinsicWidth + paddingStart).toFloat()
-                if (event.x < toggleIconEnd) isToggleIconClicked = true
+                clearButtonEnd = (clearButton.intrinsicWidth + paddingStart).toFloat()
+                if (event.x < clearButtonEnd) isClearButtonClicked = true
             } else {
-                toggleIconStart = (width - paddingEnd - toggleIcon.intrinsicWidth).toFloat()
-                if (event.x > toggleIconStart) isToggleIconClicked = true
+                clearButtonStart = (width - paddingEnd - clearButton.intrinsicWidth).toFloat()
+                if (event.x > clearButtonStart) isClearButtonClicked = true
             }
 
-            if (isToggleIconClicked) {
+            if (isClearButtonClicked) {
                 return when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        hideToggleIcon()
-                        if (transformationMethod is HideReturnsTransformationMethod) {
-                            transformationMethod = PasswordTransformationMethod.getInstance()
-                            toggleIcon = ContextCompat.getDrawable(
-                                context,
-                                R.drawable.ic_visibility_off
-                            ) as Drawable
-                            showToggleIcon()
-                        } else {
-                            transformationMethod = HideReturnsTransformationMethod.getInstance()
-                            toggleIcon = ContextCompat.getDrawable(
-                                context,
-                                R.drawable.ic_visibility
-                            ) as Drawable
-                            showToggleIcon()
-                        }
+                        clearButton = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_clear
+                        ) as Drawable
+                        showClearButton()
+                        true
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        clearButton = ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_clear
+                        ) as Drawable
+                        if (text != null) text?.clear()
+                        hideClearButton()
                         true
                     }
 

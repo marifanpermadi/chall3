@@ -4,10 +4,10 @@ package com.example.chall3.ui.login.data
  * A generic class that holds a value with its loading status.
  * @param <T>
  */
-sealed class Result<out T : Any> {
+sealed class ResultLogin<out T : Any> {
 
-    data class Success<out T : Any>(val data: T) : Result<T>()
-    data class Error(val exception: Exception) : Result<Nothing>()
+    data class Success<out T : Any>(val data: T) : ResultLogin<T>()
+    data class Error(val exception: Exception) : ResultLogin<Nothing>()
 
     override fun toString(): String {
         return when (this) {
