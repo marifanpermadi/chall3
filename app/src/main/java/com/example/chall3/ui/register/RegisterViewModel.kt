@@ -1,15 +1,11 @@
 package com.example.chall3.ui.register
 
-import android.app.Application
-import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.chall3.utils.Result
-
 import com.example.chall3.ui.register.data.RegisterRepository
+import com.example.chall3.utils.Result
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(

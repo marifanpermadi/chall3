@@ -27,6 +27,9 @@ import com.example.chall3.ui.SettingActivity
 import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.viewmodel.MenuViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
@@ -34,6 +37,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
     private lateinit var menuAdapter: MenuAdapter
+    private lateinit var auth: FirebaseAuth
 
     private val menuViewModel: MenuViewModel by viewModels {
         MenuViewModel.ViewModelFactory()
@@ -48,6 +52,9 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         userPreferences = UserPreferences(requireContext())
+
+        auth = Firebase.auth
+        checkUser()
 
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
@@ -87,6 +94,13 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
                 }
             }
         }, DELAY)
+    }
+
+    private fun checkUser() {
+        val user = Firebase.auth.currentUser
+        val name = user?.displayName
+
+        binding.tvUsername.text = name
     }
 
     private fun getMenuByCategory(category: String) {

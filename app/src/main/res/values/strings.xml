@@ -69,11 +69,11 @@
     <string name="language">Language</string>
     <string name="v_69_69" translatable="false">v.69</string>
     <string name="warung_binar" translatable="false">Warung Binar</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Log in</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password" translatable="false">Password</string>
+    <string name="action_sign_in" translatable="false">Log in</string>
+    <string name="action_sign_in_short" translatable="false">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -91,8 +91,13 @@
     <string name="field_can_not_be_empty">This field can not be empty</string>
     <string name="phone_number">Phone number</string>
     <string name="login">Login</string>
+    <string name="login_succed">Login successful</string>
+    <string name="logout_succed">Logged out successfully</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="register_succed">Registration successful. Please login using your registered account</string>
     <string name="register_failed">Registration failed. Please cek your data again</string>
+    <string name="hello">Hello</string>
+    <string name="binarian">Binarian</string>
+    <string name="log_out">Log out</string>
 
 </resources>

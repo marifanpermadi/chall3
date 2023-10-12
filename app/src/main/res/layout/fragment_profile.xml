@@ -60,9 +60,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                tools:ignore="TextContrastCheck,VisualLintTextFieldSize"
-                android:backgroundTint="@color/light_magenta"/>
+                android:layout_height="60dp"
+                android:backgroundTint="@color/light_magenta"
+                tools:ignore="TextContrastCheck,VisualLintTextFieldSize,DuplicateSpeakableTextCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +94,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+                android:layout_height="60dp"
+                tools:ignore="VisualLintTextFieldSize,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,8 +127,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+                android:layout_height="60dp"
+                tools:ignore="VisualLintTextFieldSize,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -160,10 +160,22 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+                android:layout_height="60dp"
+                tools:ignore="VisualLintTextFieldSize,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/iv_logout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:tint="@color/orange_dark"
+            android:contentDescription="@string/log_out" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

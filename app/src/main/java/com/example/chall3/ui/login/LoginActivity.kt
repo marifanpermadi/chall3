@@ -1,20 +1,18 @@
 package com.example.chall3.ui.login
 
-import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.example.chall3.R
 import com.example.chall3.databinding.ActivityLoginBinding
+import com.example.chall3.ui.MainActivity
 import com.example.chall3.ui.register.RegisterActivity
+import com.example.chall3.utils.Result
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,39 +25,44 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val email = binding.etEmail
-        val password = binding.etPassword.toString()
-        val login = binding.btLogin
-        val loading = binding.progressBar
-
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
-
-            if (loading != null) {
-                loading.visibility = View.GONE
-            }
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
-            setResult(Activity.RESULT_OK)
-
-            finish()
-        })
-
         isDataValid()
-        login()
+        loginUser()
         moveToRegister()
     }
 
-    private fun login() {
+    private fun loginUser() {
         binding.btLogin!!.setOnClickListener {
-            Log.d("BtLogin", "Button clicked, ${isDataValid()}")
+            val email = binding.etEmail!!.text.toString()
+            val password = binding.etPassword!!.text.toString()
+            login(email, password)
+        }
+    }
 
+    private fun login(email: String, password: String) {
+        loginViewModel.login(email, password)
+        showLoading(true)
+
+        loginViewModel.loginResult.observe(this@LoginActivity) {
+            showLoading(false)
+            when (it) {
+                is Result.Success -> {
+                    Toast.makeText(
+                        this@LoginActivity, getString(R.string.login_succed), Toast.LENGTH_SHORT)
+                        .show()
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+                is Result.Error -> {
+                    Toast.makeText(
+                        this@LoginActivity, it.exception.toString(), Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 
@@ -83,6 +86,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
+            @Suppress("DEPRECATION")
             override fun afterTextChanged(s: Editable?) {
                 if (emailEt.emailValid() && passwordEt.isPasswordValid()) {
                     btLogin.isEnabled = true
@@ -100,7 +104,7 @@ class LoginActivity : AppCompatActivity() {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
-
+            @Suppress("DEPRECATION")
             override fun afterTextChanged(p0: Editable?) {
                 if (emailEt.emailValid() && passwordEt.isPasswordValid()) {
                     btLogin.isEnabled = true
@@ -111,23 +115,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
-        Log.d("BtLogin", "Button clicked, ${emailEt.emailValid()}, ${passwordEt.isPasswordValid()}")
 
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {

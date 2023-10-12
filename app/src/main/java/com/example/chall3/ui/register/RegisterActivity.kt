@@ -1,17 +1,14 @@
 package com.example.chall3.ui.register
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.chall3.R
 import com.example.chall3.databinding.ActivityRegisterBinding
 import com.example.chall3.ui.login.LoginActivity
-import com.example.chall3.ui.login.LoginViewModel
-import com.example.chall3.ui.login.LoginViewModelFactory
 import com.example.chall3.utils.Result
 
 class RegisterActivity : AppCompatActivity() {
@@ -27,7 +24,6 @@ class RegisterActivity : AppCompatActivity() {
         registerViewModel =
             ViewModelProvider(this, RegisterViewModelFactory())[RegisterViewModel::class.java]
 
-
         registerUser()
     }
 
@@ -36,7 +32,6 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
             register(email, password)
-            Log.d("Register", email + password)
         }
     }
 
@@ -61,9 +56,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 is Result.Error -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        it.exception.toString(),
-                        Toast.LENGTH_SHORT
+                        this@RegisterActivity, it.exception.toString(), Toast.LENGTH_SHORT
                     ).show()
                 }
             }
