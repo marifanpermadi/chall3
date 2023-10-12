@@ -46,8 +46,6 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="action_sign_in">Log in</string>
-    <string name="prompt_email">Email</string>
     <string name="welcome">Selamat datang</string>
     <string name="invalid_username">Nama pengguna tidak valid</string>
 </resources>

@@ -10,18 +10,35 @@ import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.example.chall3.R
+import com.example.chall3.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         setupView()
 
+        auth = Firebase.auth
+
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+
+            val user = Firebase.auth.currentUser
+            if (user != null) {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                startActivity(Intent(this,LoginActivity::class.java))
+                finish()
+            }
+
         }, DELAY_TIME)
     }
 

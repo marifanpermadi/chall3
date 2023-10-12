@@ -100,7 +100,8 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         val user = Firebase.auth.currentUser
         val name = user?.displayName
 
-        binding.tvUsername.text = name
+        binding.tvUsername.text = name.toString()
+        Log.d("Username", name.toString())
     }
 
     private fun getMenuByCategory(category: String) {
