@@ -54,7 +54,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
         menuAdapter = MenuAdapter(listener = this)
         binding.rvVertical.setHasFixedSize(true)
-        getListMenu()
+        //getListMenu()
 
         binding.rvHorizontal.setHasFixedSize(true)
         if (listHorizontal.isEmpty()) {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "265796829775",
+    "project_id": "challenge-warung-binar",
+    "storage_bucket": "challenge-warung-binar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265796829775:android:2cfa12919e580e9ae0603a",
+        "android_client_info": {
+          "package_name": "com.example.chall3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMs_gEms2Y8NF-gz7U5PAHwjNUPisMllw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

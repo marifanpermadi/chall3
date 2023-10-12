@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.example.chall3.R
 import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.databinding.FragmentDetailBinding
-import com.example.chall3.model.Foods
 import com.example.chall3.viewmodel.DetailViewModel
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.viewmodelfactory.ViewModelFactory
