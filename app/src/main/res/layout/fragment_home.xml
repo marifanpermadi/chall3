@@ -86,6 +86,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/category_placeholder" />
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <TextView
         android:id="@+id/tv_for"
         android:layout_width="wrap_content"
@@ -94,8 +113,8 @@
         android:text="@string/for_you"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/cv_banner"
-        app:layout_constraintTop_toBottomOf="@id/rv_horizontal" />
+        app:layout_constraintTop_toBottomOf="@id/rv_horizontal"
+        app:layout_constraintStart_toStartOf="@id/cv_banner" />
 
     <ImageView
         android:id="@+id/iv_toggle"
@@ -106,27 +125,6 @@
         app:layout_constraintEnd_toEndOf="@id/cv_banner"
         app:layout_constraintTop_toTopOf="@id/tv_for"
         app:tint="@color/orange_dark" />
-
-    <!--<com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerFrameLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_for">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include layout="@layout/placeholder_layout" />
-
-            <include layout="@layout/placeholder_layout" />
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>-->
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFrameLayout"
@@ -148,7 +146,6 @@
             <include layout="@layout/placeholder_layout" />
 
         </LinearLayout>
-
     </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView

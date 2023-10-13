@@ -30,7 +30,6 @@ class ProfileFragment : Fragment() {
         auth = Firebase.auth
 
         binding.ivProfile.setOnClickListener {
-
             val i = Intent(activity, LoginActivity::class.java)
             startActivity(i)
         }
@@ -47,6 +46,7 @@ class ProfileFragment : Fragment() {
 
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
+            requireActivity().finishAffinity()
             Toast.makeText(requireContext(), getString(R.string.logout_succed), Toast.LENGTH_SHORT)
                 .show()
         }

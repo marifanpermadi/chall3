@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.chall3.R
-import com.example.chall3.model.MenuCategory
+import com.example.chall3.data.apimodel.DataCategory
 
 class HorizontalFoodAdapter(
-    private val listFood: ArrayList<MenuCategory>,
+    private val listCategory: List<DataCategory>,
     private val onCategoryClickListener: (String) -> Unit
 ) : RecyclerView.Adapter<HorizontalFoodAdapter.ListViewHolder>() {
 
@@ -21,15 +22,20 @@ class HorizontalFoodAdapter(
         return ListViewHolder(view)
     }
 
-    override fun getItemCount(): Int = listFood.size
+    override fun getItemCount(): Int = listCategory.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (name, image) = listFood[position]
-        holder.imgPhoto.setImageResource(image)
-        holder.imgName.text = name
+        val category = listCategory[position]
+
+        Glide.with(holder.itemView.context)
+            .load(category.imageUrl)
+            .centerCrop()
+            .into(holder.imgPhoto)
+
+        holder.imgName.text = category.nama
 
         holder.itemView.setOnClickListener {
-            onCategoryClickListener(name)
+            onCategoryClickListener(category.nama)
         }
 
     }

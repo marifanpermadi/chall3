@@ -74,7 +74,7 @@ class OrderFragment : Fragment() {
             val orderItems = cartViewModel.allCartItems.value ?: emptyList()
             if (orderItems.isNotEmpty()) {
                 val total = cartViewModel.totalPrice.value ?: 0
-                val orderRequest = OrderRequest("Agus",total,orderItems.map {
+                val orderRequest = OrderRequest("Uchup",total,orderItems.map {
                     OrderItem(it.foodName, it.orderAmount, it.orderNote ?: "", it.foodPrice)
                 })
 
