@@ -7,14 +7,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.chall3.R
+import com.example.chall3.database.users.User
+import com.example.chall3.database.users.UserDatabase
 import com.example.chall3.databinding.ActivityRegisterBinding
 import com.example.chall3.ui.login.LoginActivity
 import com.example.chall3.utils.Result
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var registerViewModel: RegisterViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +37,14 @@ class RegisterActivity : AppCompatActivity() {
         binding.btRegister.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            register(email, password)
+            val userName = binding.etUsername.text.toString()
+            val phoneNumber = binding.etPhone.text.toString()
+
+            register(email, password, userName, phoneNumber)
         }
     }
 
-    private fun register(email: String, password: String) {
+    private fun register(email: String, password: String, userName: String, phoneNumber: String) {
 
         registerViewModel.register(email, password)
         showLoading(true)
@@ -49,6 +58,8 @@ class RegisterActivity : AppCompatActivity() {
                         getString(R.string.register_succed), Toast.LENGTH_SHORT
                     ).show()
 
+                    insertUserIntoDatabase(email, userName, phoneNumber)
+
                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -60,6 +71,15 @@ class RegisterActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+        }
+    }
+
+    private fun insertUserIntoDatabase(email: String, userName: String, phoneNumber: String) {
+        val user = User(email = email, userName = userName, phoneNumber = phoneNumber)
+        val userDao = UserDatabase.getUserDataBase(this).userDao()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            userDao.insert(user)
         }
     }
 

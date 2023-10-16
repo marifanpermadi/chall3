@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chall3.data.apimodel.DataMenu
-import com.example.chall3.database.Cart
+import com.example.chall3.database.cart.Cart
 import com.example.chall3.repository.CartRepository
 
 class DetailViewModel(application: Application) : ViewModel() {

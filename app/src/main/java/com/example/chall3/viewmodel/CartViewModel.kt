@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.chall3.data.api.ApiConfig
 import com.example.chall3.data.apimodel.OrderRequest
 import com.example.chall3.data.apimodel.OrderResponse
-import com.example.chall3.database.Cart
+import com.example.chall3.database.cart.Cart
 import com.example.chall3.repository.CartRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,13 +55,11 @@ class CartViewModel(application: Application) : ViewModel() {
                     _orderPlacedLiveData.postValue(true)
                     _isLoading.value = false
                 } else {
-                    Log.d("OrderFailed", response.message())
                     _orderPlacedLiveData.postValue(false)
                 }
             }
 
             override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
-                Log.d("OrderFailed", t.message.toString())
                 _orderPlacedLiveData.postValue(false)
                 _isLoading.value = false
             }

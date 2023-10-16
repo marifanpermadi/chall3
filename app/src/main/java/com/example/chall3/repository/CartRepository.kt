@@ -3,9 +3,9 @@ package com.example.chall3.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.example.chall3.database.Cart
-import com.example.chall3.database.CartDao
-import com.example.chall3.database.CartDataBase
+import com.example.chall3.database.cart.Cart
+import com.example.chall3.database.cart.CartDao
+import com.example.chall3.database.cart.CartDataBase
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

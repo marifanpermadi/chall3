@@ -58,14 +58,14 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
         menuAdapter = MenuAdapter(listener = this)
-        binding.rvVertical.setHasFixedSize(true)
+        /*binding.rvVertical.setHasFixedSize(true)
         getListMenu()
 
         getMenuCategory()
         binding.rvHorizontal.setHasFixedSize(true)
         menuViewModel.menuCategory.observe(viewLifecycleOwner) {
             setCategory(it)
-        }
+        }*/
 
         menuViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
