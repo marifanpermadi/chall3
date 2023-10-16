@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,14 +21,13 @@ import com.example.chall3.adapter.HorizontalFoodAdapter
 import com.example.chall3.adapter.MenuAdapter
 import com.example.chall3.data.apimodel.DataCategory
 import com.example.chall3.data.apimodel.DataMenu
+import com.example.chall3.database.users.UserDatabase
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.ui.SettingActivity
 import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.viewmodel.MenuViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.chall3.viewmodelfactory.HomeViewModelFactory
 
 class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
@@ -37,12 +35,10 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
     private lateinit var menuAdapter: MenuAdapter
-    private lateinit var auth: FirebaseAuth
 
     private val menuViewModel: MenuViewModel by viewModels {
         MenuViewModel.ViewModelFactory()
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,10 +47,12 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
         userPreferences = UserPreferences(requireContext())
 
-        auth = Firebase.auth
+        val userDatabase = UserDatabase.getUserDataBase(requireContext())
+        val userDao = userDatabase.userDao()
+        homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
+
         checkUser()
 
-        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
         menuAdapter = MenuAdapter(listener = this)
@@ -110,11 +108,10 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
     }
 
     private fun checkUser() {
-        val user = Firebase.auth.currentUser
-        val name = user?.displayName
-
-        binding.tvUsername.text = name.toString()
-        Log.d("Username", name.toString())
+        homeViewModel.getUserByEmail()
+        homeViewModel.userLiveData.observe(viewLifecycleOwner) {
+            binding.tvUsername.text = it.userName.uppercase()
+        }
     }
 
     private fun getMenuByCategory(category: String) {
