@@ -14,7 +14,7 @@ import com.example.chall3.R
 import com.example.chall3.adapter.CartAdapter
 import com.example.chall3.databinding.FragmentCartBinding
 import com.example.chall3.viewmodel.CartViewModel
-import com.example.chall3.viewmodelfactory.ViewModelFactory
+import com.example.chall3.viewmodelfactory.SharedViewModelFactory
 
 class CartFragment : Fragment() {
 
@@ -62,8 +62,8 @@ class CartFragment : Fragment() {
     }
 
     private fun setUpCartViewModel() {
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
-        cartViewModel = ViewModelProvider(this, viewModelFactory)[CartViewModel::class.java]
+        val sharedViewModelFactory = SharedViewModelFactory(requireActivity().application)
+        cartViewModel = ViewModelProvider(this, sharedViewModelFactory)[CartViewModel::class.java]
     }
 
     private fun orderItem() {

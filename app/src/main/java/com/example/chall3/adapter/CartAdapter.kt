@@ -45,7 +45,6 @@ class CartAdapter(
             holder.tvNumber.text = newAmount.toString()
 
             currentItem.foodPrice = currentItem.basePrice * newAmount
-            holder.tvPrice.text = currentItem.foodPrice.toString()
         }
 
         holder.btMin.setOnClickListener {
@@ -58,7 +57,6 @@ class CartAdapter(
                 holder.tvNumber.text = newAmount.toString()
 
                 currentItem.foodPrice = currentItem.basePrice * newAmount
-                holder.tvPrice.text = currentItem.foodPrice.toString()
             }
         }
     }
@@ -70,7 +68,7 @@ class CartAdapter(
         val btPlus: Button = itemView.findViewById(R.id.bt_plus)
         val btMin: Button = itemView.findViewById(R.id.bt_min)
         val tvNumber: TextView = itemView.findViewById(R.id.tv_number)
-        val tvPrice: TextView = itemView.findViewById(R.id.tv_price)
+        //val tvPrice: TextView = itemView.findViewById(R.id.tv_price)
 
         fun bind(cartItem: Cart) {
 

@@ -17,8 +17,4 @@ class LoginDataSource {
             Result.Error(e)
         }
     }
-
-    fun logout() {
-
-    }
 }

@@ -17,7 +17,7 @@ import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.viewmodel.DetailViewModel
 import com.example.chall3.viewmodel.HomeViewModel
-import com.example.chall3.viewmodelfactory.ViewModelFactory
+import com.example.chall3.viewmodelfactory.SharedViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -141,9 +141,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun setUpDetailViewModel() {
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
+        val sharedViewModelFactory = SharedViewModelFactory(requireActivity().application)
         detailViewModel =
-            ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+            ViewModelProvider(this, sharedViewModelFactory)[DetailViewModel::class.java]
     }
 
     @SuppressLint("InflateParams")

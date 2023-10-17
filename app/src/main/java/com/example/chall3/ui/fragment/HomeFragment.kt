@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
-import com.example.chall3.adapter.HorizontalFoodAdapter
+import com.example.chall3.adapter.MenuCategoryAdapter
 import com.example.chall3.adapter.MenuAdapter
 import com.example.chall3.data.apimodel.DataCategory
 import com.example.chall3.data.apimodel.DataMenu
@@ -56,14 +56,14 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
         menuAdapter = MenuAdapter(listener = this)
-        /*binding.rvVertical.setHasFixedSize(true)
+        binding.rvVertical.setHasFixedSize(true)
         getListMenu()
 
         getMenuCategory()
         binding.rvHorizontal.setHasFixedSize(true)
         menuViewModel.menuCategory.observe(viewLifecycleOwner) {
             setCategory(it)
-        }*/
+        }
 
         menuViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
@@ -84,7 +84,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         binding.rvHorizontal.layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         val categoryAdapter = listCategory?.let { dataCategories ->
-            HorizontalFoodAdapter(dataCategories) {
+            MenuCategoryAdapter(dataCategories) {
                 getMenuByCategory(it.lowercase())
             }
         }

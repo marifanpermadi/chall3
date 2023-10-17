@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.chall3.R
 import com.example.chall3.data.apimodel.DataCategory
 
-class HorizontalFoodAdapter(
+class MenuCategoryAdapter(
     private val listCategory: List<DataCategory>,
     private val onCategoryClickListener: (String) -> Unit
-) : RecyclerView.Adapter<HorizontalFoodAdapter.ListViewHolder>() {
+) : RecyclerView.Adapter<MenuCategoryAdapter.ListViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

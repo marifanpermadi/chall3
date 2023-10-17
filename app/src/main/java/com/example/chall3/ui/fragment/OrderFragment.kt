@@ -15,7 +15,7 @@ import com.example.chall3.data.apimodel.OrderRequest
 import com.example.chall3.databinding.FragmentOrderBinding
 import com.example.chall3.ui.customlayout.PaymentSuccessDialog
 import com.example.chall3.viewmodel.CartViewModel
-import com.example.chall3.viewmodelfactory.ViewModelFactory
+import com.example.chall3.viewmodelfactory.SharedViewModelFactory
 
 class OrderFragment : Fragment() {
 
@@ -64,8 +64,8 @@ class OrderFragment : Fragment() {
     }
 
     private fun setUpCartViewModel() {
-        val viewModelFactory = ViewModelFactory(requireActivity().application)
-        cartViewModel = ViewModelProvider(this, viewModelFactory)[CartViewModel::class.java]
+        val sharedViewModelFactory = SharedViewModelFactory(requireActivity().application)
+        cartViewModel = ViewModelProvider(this, sharedViewModelFactory)[CartViewModel::class.java]
     }
 
     private fun payNow() {

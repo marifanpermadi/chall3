@@ -7,7 +7,7 @@ import com.example.chall3.viewmodel.CartViewModel
 import com.example.chall3.viewmodel.DetailViewModel
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory(
+class SharedViewModelFactory(
     private val application: Application
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

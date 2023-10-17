@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello_binarian">Halo Binarian,</string>
     <string name="feeling_hungry">Laper ya?</string>
     <string name="for_you">Buat kamu:</string>
     <string name="order_now">Manjakan dirimu dengan penawaran terbaik</string>
@@ -42,10 +41,20 @@
     <string name="see_now">Lihat</string>
     <string name="dark_mode">Mode gelap</string>
     <string name="language">Bahasa</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">Selamat datang</string>
-    <string name="invalid_username">Nama pengguna tidak valid</string>
+    <string name="invalid_password">Password min 5 karakter</string>
+    <string name="email_invalid">Email tidak valid</string>
+    <string name="enter_your_email">Email</string>
+    <string name="enter_your_password">Password</string>
+    <string name="login_now">Login dan rasakan manfaatnya!</string>
+    <string name="don_t_have">Belum punya akun?</string>
+    <string name="register">Register</string>
+    <string name="join_us">Gabung dan jelajahi rasanya!</string>
+    <string name="field_can_not_be_empty">Kolom ini tidak boleh kosong</string>
+    <string name="phone_number">No telepon</string>
+    <string name="login_succed">Login berhasil</string>
+    <string name="logout_succed">Log out berhasil</string>
+    <string name="already_have_an_account">Sudah punya akun?</string>
+    <string name="register_succed">Registrasi berhasil. Silahkan login dengan akun anda.</string>
+    <string name="hello">Halo</string>
+    <string name="log_out">Log out</string>
 </resources>

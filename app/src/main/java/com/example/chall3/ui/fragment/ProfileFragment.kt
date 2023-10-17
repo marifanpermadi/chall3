@@ -38,11 +38,6 @@ class ProfileFragment : Fragment() {
         val userDao = userDatabase.userDao()
         homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
 
-        binding.ivProfile.setOnClickListener {
-            val i = Intent(activity, LoginActivity::class.java)
-            startActivity(i)
-        }
-
         checkUser()
         logOut()
 

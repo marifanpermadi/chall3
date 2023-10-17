@@ -11,10 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.chall3.R
 import com.example.chall3.data.apimodel.DataMenu
-import com.example.chall3.databinding.ItemVerticalLinearBinding
-import com.example.chall3.model.Menu
-import com.example.chall3.ui.fragment.DetailFragmentDirections
-import com.example.chall3.ui.fragment.HomeFragmentDirections
 
 class MenuAdapter(
     var isGridMode: Boolean = true,
@@ -25,14 +21,6 @@ class MenuAdapter(
         private val menuImage: ImageView = itemView.findViewById(R.id.iv_food)
         private val menuPrice: TextView = itemView.findViewById(R.id.tv_price)
         private val menuName: TextView = itemView.findViewById(R.id.tv_desc)
-
-        /*init {
-            itemView.setOnClickListener {
-                getItem(absoluteAdapterPosition)?.let { data ->
-                    listener?.onItemClick(data)
-                }
-            }
-        }*/
 
         fun bind(data: DataMenu) {
             Glide.with(itemView.context)
@@ -46,7 +34,6 @@ class MenuAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //getItem(position)?.let { holder.bind(it) }
 
         getItem(position)?.let { item ->
             holder.bind(item)
