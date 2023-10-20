@@ -12,8 +12,10 @@ import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
@@ -39,6 +41,16 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
     private val menuViewModel: MenuViewModel by viewModels {
         MenuViewModel.ViewModelFactory()
     }
+
+    private val menuDataObserver = Observer<PagingData<DataMenu>> { dataMenu ->
+        showShimmerEffect()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            menuAdapter.submitData(lifecycle, dataMenu)
+            hideShimmerEffect()
+        }, DELAY)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +69,10 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
         menuAdapter = MenuAdapter(listener = this)
         binding.rvVertical.setHasFixedSize(true)
-        getListMenu()
+        //getListMenu()
+
+        menuViewModel.getListMenu().observe(viewLifecycleOwner, menuDataObserver)
+
 
         getMenuCategory()
         binding.rvHorizontal.setHasFixedSize(true)
@@ -91,7 +106,8 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         binding.rvHorizontal.adapter = categoryAdapter
     }
 
-    private fun getListMenu() {
+    //this function trigger "cant access fragment's view life cycle owner" when loading is not done
+    /*private fun getListMenu() {
         binding.rvVertical.layoutManager = GridLayoutManager(requireActivity(), 2)
         binding.rvVertical.adapter = menuAdapter
 
@@ -105,7 +121,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
                 }
             }
         }, DELAY)
-    }
+    }*/
 
     private fun checkUser() {
         homeViewModel.getUserByEmail()
@@ -239,8 +255,14 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        menuViewModel.getListMenu().removeObserver(menuDataObserver)
+    }
+
     companion object {
-        const val DELAY = 2000L
+        const val DELAY = 1000L
     }
 
 
