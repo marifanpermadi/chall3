@@ -3,53 +3,68 @@ package com.example.chall3.ui.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
+import com.example.chall3.adapter.CategoryAdapterDI
 import com.example.chall3.adapter.MenuCategoryAdapter
 import com.example.chall3.adapter.MenuAdapter
+import com.example.chall3.adapter.MenuAdapterDI
 import com.example.chall3.data.apimodel.DataCategory
 import com.example.chall3.data.apimodel.DataMenu
-import com.example.chall3.database.users.UserDatabase
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.ui.SettingActivity
+import com.example.chall3.utils.NetworkResult
 import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
 import com.example.chall3.viewmodel.MenuViewModel
-import com.example.chall3.viewmodelfactory.HomeViewModelFactory
+import com.example.chall3.viewmodel.MenuViewModelDI
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
+@AndroidEntryPoint
+class HomeFragment : Fragment(),
+    MenuAdapter.OnItemClickListener,
+    MenuAdapterDI.OnItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
     private lateinit var menuAdapter: MenuAdapter
 
+    private val menuAdapterDI by lazy { MenuAdapterDI() }
+    private val categoryAdapterDI by lazy { CategoryAdapterDI() }
+
+    private val menuViewModelDI: MenuViewModelDI by viewModels()
+
     private val menuViewModel: MenuViewModel by viewModels {
         MenuViewModel.ViewModelFactory()
     }
 
-    private val menuDataObserver = Observer<PagingData<DataMenu>> { dataMenu ->
+    /*private val menuDataObserver = Observer<PagingData<DataMenu>> { dataMenu ->
         showShimmerEffect()
 
         Handler(Looper.getMainLooper()).postDelayed({
             menuAdapter.submitData(lifecycle, dataMenu)
             hideShimmerEffect()
         }, DELAY)
-    }
+    }*/
+
+    /*override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        menuViewModelDI = ViewModelProvider(requireActivity())[MenuViewModelDI::class.java]
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,40 +74,162 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
 
         userPreferences = UserPreferences(requireContext())
 
-        val userDatabase = UserDatabase.getUserDataBase(requireContext())
-        val userDao = userDatabase.userDao()
-        homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
+        //val userDatabase = UserDatabase.getUserDataBase(requireContext())
+        //val userDao = userDatabase.userDao()
+        //homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
 
-        checkUser()
+        //checkUser()
 
-        homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
+        //homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
-        menuAdapter = MenuAdapter(listener = this)
+        //menuAdapter = MenuAdapter(listener = this)
+
+        //menuAdapterDI = MenuAdapterDI(listener = this)
+
         binding.rvVertical.setHasFixedSize(true)
+        binding.rvHorizontal.setHasFixedSize(true)
         //getListMenu()
 
-        menuViewModel.getListMenu().observe(viewLifecycleOwner, menuDataObserver)
+        //menuViewModel.getListMenu().observe(viewLifecycleOwner, menuDataObserver)
 
 
-        getMenuCategory()
-        binding.rvHorizontal.setHasFixedSize(true)
+        /*getMenuCategory()
+
         menuViewModel.menuCategory.observe(viewLifecycleOwner) {
             setCategory(it)
-        }
+            hideShimmerCategory()
+        }*/
 
-        menuViewModel.isLoading.observe(viewLifecycleOwner) {
+        /*menuViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
-        }
+        }*/
 
-        homeViewModel.isListView.observe(viewLifecycleOwner) {
+        /*homeViewModel.isListView.observe(viewLifecycleOwner) {
             toggleLayout()
-        }
+        }*/
 
-        showAllMenu()
+        setupRecyclerView()
+        readDataMenu()
+        readDataCategory()
+
+        //showAllMenu()
         onBackPressed()
         settingActivity()
 
         return binding.root
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvVertical.adapter = menuAdapterDI
+        binding.rvHorizontal.adapter = categoryAdapterDI
+
+        binding.rvVertical.layoutManager = GridLayoutManager(requireActivity(), 2)
+        binding.rvHorizontal.layoutManager =
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+
+        showShimmerEffect()
+        showShimmerCategory()
+    }
+
+    private fun readDataCategory() {
+        Log.d("Read database", "read category database called")
+        lifecycleScope.launch {
+            menuViewModelDI.readCategory.observe(viewLifecycleOwner) { database ->
+                if (database.isNotEmpty()) {
+                    categoryAdapterDI.setData(database.first().categoryResponse)
+                    hideShimmerCategory()
+                } else {
+                    requestCategoryApi()
+                }
+            }
+        }
+    }
+
+    private fun requestCategoryApi() {
+        Log.d("Call api", "category api called")
+        menuViewModelDI.getCategory()
+        menuViewModelDI.categoryResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    Log.d("Call success", "api called successfully")
+                    hideShimmerCategory()
+                    response.data?.let { categoryAdapterDI.setData(it) }
+                }
+
+                is NetworkResult.Error -> {
+                    Log.d("Call success", "api call failed")
+                    hideShimmerCategory()
+                    loadCategoryFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is NetworkResult.Loading -> {
+                    showShimmerCategory()
+                }
+            }
+        }
+
+    }
+
+    private fun loadCategoryFromCache() {
+        menuViewModelDI.readCategory.observe(viewLifecycleOwner) { database ->
+            if (database.isNotEmpty()) {
+                categoryAdapterDI.setData(database.first().categoryResponse)
+            }
+        }
+    }
+
+    private fun readDataMenu() {
+        Log.d("Read database", "read menu database called")
+        lifecycleScope.launch {
+            menuViewModelDI.readMenu.observe(viewLifecycleOwner) { database ->
+                if (database.isNotEmpty()) {
+                    menuAdapterDI.setData(database.first().listMenuResponse)
+                    hideShimmerEffect()
+                } else {
+                    requestMenuFromApi()
+                }
+            }
+        }
+    }
+
+    private fun requestMenuFromApi() {
+        Log.d("Call api", "menu api called")
+        menuViewModelDI.getListMenu()
+        menuViewModelDI.listMenuResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    response.data?.let { menuAdapterDI.setData(it) }
+                }
+
+                is NetworkResult.Error -> {
+                    hideShimmerEffect()
+                    loadMenuFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is NetworkResult.Loading -> {
+                    showShimmerEffect()
+                }
+            }
+        }
+    }
+
+    private fun loadMenuFromCache() {
+        menuViewModelDI.readMenu.observe(viewLifecycleOwner) { database ->
+            if (database.isNotEmpty()) {
+                menuAdapterDI.setData(database.first().listMenuResponse)
+            }
+        }
     }
 
     private fun setCategory(listCategory: List<DataCategory>?) {
@@ -105,23 +242,6 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         }
         binding.rvHorizontal.adapter = categoryAdapter
     }
-
-    //this function trigger "cant access fragment's view life cycle owner" when loading is not done
-    /*private fun getListMenu() {
-        binding.rvVertical.layoutManager = GridLayoutManager(requireActivity(), 2)
-        binding.rvVertical.adapter = menuAdapter
-
-        showShimmerEffect()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            menuViewModel.getListMenu().observe(viewLifecycleOwner) { dataMenu ->
-                if (dataMenu != null) {
-                    menuAdapter.submitData(lifecycle, dataMenu)
-                    hideShimmerEffect()
-                }
-            }
-        }, DELAY)
-    }*/
 
     private fun checkUser() {
         homeViewModel.getUserByEmail()
@@ -255,11 +375,11 @@ class HomeFragment : Fragment(), MenuAdapter.OnItemClickListener {
         }
     }
 
-    override fun onDestroyView() {
+    /*override fun onDestroyView() {
         super.onDestroyView()
 
         menuViewModel.getListMenu().removeObserver(menuDataObserver)
-    }
+    }*/
 
     companion object {
         const val DELAY = 1000L

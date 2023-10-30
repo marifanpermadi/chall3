@@ -10,7 +10,7 @@ abstract class UserDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 
-    companion object {
+    /*companion object {
         private var INSTANCE: UserDatabase? = null
 
         @JvmStatic
@@ -26,5 +26,21 @@ abstract class UserDatabase : RoomDatabase() {
             }
             return INSTANCE as UserDatabase
         }
-    }
+    }*/
 }
+
+/**
+ * @Database(
+entities = [Menu::class],
+version = 1,
+exportSchema = false
+)
+@TypeConverters(MenuTypeConverter::class)
+abstract class MenuDatabase: RoomDatabase() {
+
+abstract fun menuDao(): MenuDao
+}
+ *
+ *
+ *
+ * **/

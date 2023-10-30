@@ -12,7 +12,9 @@ import com.example.chall3.databinding.ActivityMainBinding
 import com.example.chall3.utils.SettingPreferences
 import com.example.chall3.viewmodel.SettingViewModel
 import com.example.chall3.viewmodelfactory.SettingViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

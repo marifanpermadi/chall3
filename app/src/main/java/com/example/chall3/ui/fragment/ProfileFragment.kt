@@ -34,11 +34,11 @@ class ProfileFragment : Fragment() {
 
         auth = Firebase.auth
 
-        val userDatabase = UserDatabase.getUserDataBase(requireContext())
-        val userDao = userDatabase.userDao()
-        homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
+        //val userDatabase = UserDatabase.getUserDataBase(requireContext())
+        //val userDao = userDatabase.userDao()
+        //homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
 
-        checkUser()
+        //checkUser()
         logOut()
 
         return binding.root

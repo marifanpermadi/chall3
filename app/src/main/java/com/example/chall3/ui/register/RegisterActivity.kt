@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                         getString(R.string.register_succed), Toast.LENGTH_SHORT
                     ).show()
 
-                    insertUserIntoDatabase(email, userName, phoneNumber)
+                    //insertUserIntoDatabase(email, userName, phoneNumber)
 
                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     startActivity(intent)
@@ -74,14 +74,14 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertUserIntoDatabase(email: String, userName: String, phoneNumber: String) {
+    /*private fun insertUserIntoDatabase(email: String, userName: String, phoneNumber: String) {
         val user = User(email = email, userName = userName, phoneNumber = phoneNumber)
         val userDao = UserDatabase.getUserDataBase(this).userDao()
 
         CoroutineScope(Dispatchers.IO).launch {
             userDao.insert(user)
         }
-    }
+    }*/
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
