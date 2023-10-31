@@ -26,7 +26,7 @@ object DatabaseModule {
         context,
         UserDatabase::class.java,
         "user_database"
-    )
+    ).build()
 
     @Singleton
     @Provides

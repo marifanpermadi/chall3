@@ -10,7 +10,7 @@ import androidx.room.Query
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Query("SELECT * FROM users WHERE email = :email")
     fun getUser(email: String) : LiveData<User>

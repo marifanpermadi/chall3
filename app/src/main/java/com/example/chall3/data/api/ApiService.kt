@@ -17,10 +17,6 @@ interface ApiService {
     @GET("listmenu")
     suspend fun getListMenu(): ListMenuResponse
 
-    //with di
-    @GET("listmenu")
-    suspend fun getListMenuDI(): Response<ListMenuResponse>
-
     @GET("listmenu")
     suspend fun getMenuByCategory(
         @Query("c") category: String
@@ -29,12 +25,22 @@ interface ApiService {
     @GET("category")
     fun getCategory(): Call<CategoryResponse>
 
-    @GET("category")
-    suspend fun getCategoryDI(): Response<CategoryResponse>
-
     @POST("order")
     fun placeOrder(
         @Body orderRequest: OrderRequest
     ): Call<OrderResponse>
+
+
+    /** WITH DI **/
+    @GET("listmenu")
+    suspend fun getListMenuDI(): Response<ListMenuResponse>
+
+    @GET("category")
+    suspend fun getCategoryDI(): Response<CategoryResponse>
+
+    @GET("listmenu")
+    suspend fun getMenuByCategoryDI(
+        @Query("c") category: String
+    ): Response<ListMenuResponse>
 
 }

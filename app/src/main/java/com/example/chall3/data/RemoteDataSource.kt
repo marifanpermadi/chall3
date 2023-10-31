@@ -19,4 +19,8 @@ class RemoteDataSource @Inject constructor(
         return apiService.getCategoryDI()
     }
 
+    suspend fun getMenuByCategory(category: String) : Response<ListMenuResponse> {
+        return apiService.getMenuByCategoryDI(category)
+    }
+
 }

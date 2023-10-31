@@ -14,4 +14,5 @@ interface MenuDao {
 
     @Query("SELECT * FROM menu_table ORDER BY id ASC")
     fun readMenu(): Flow<List<Menu>>
+
 }

@@ -1,6 +1,5 @@
 package com.example.chall3.ui.fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,101 +17,56 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
 import com.example.chall3.adapter.CategoryAdapterDI
-import com.example.chall3.adapter.MenuCategoryAdapter
-import com.example.chall3.adapter.MenuAdapter
 import com.example.chall3.adapter.MenuAdapterDI
-import com.example.chall3.data.apimodel.DataCategory
 import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.databinding.FragmentHomeBinding
 import com.example.chall3.ui.SettingActivity
 import com.example.chall3.utils.NetworkResult
 import com.example.chall3.utils.UserPreferences
 import com.example.chall3.viewmodel.HomeViewModel
-import com.example.chall3.viewmodel.MenuViewModel
 import com.example.chall3.viewmodel.MenuViewModelDI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
-    MenuAdapter.OnItemClickListener,
     MenuAdapterDI.OnItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var userPreferences: UserPreferences
-    private lateinit var menuAdapter: MenuAdapter
 
-    private val menuAdapterDI by lazy { MenuAdapterDI() }
-    private val categoryAdapterDI by lazy { CategoryAdapterDI() }
+    //private val menuAdapterDI by lazy { MenuAdapterDI() }
+    private lateinit var menuAdapterDI: MenuAdapterDI
+    private lateinit var categoryAdapterDI: CategoryAdapterDI
 
     private val menuViewModelDI: MenuViewModelDI by viewModels()
-
-    private val menuViewModel: MenuViewModel by viewModels {
-        MenuViewModel.ViewModelFactory()
-    }
-
-    /*private val menuDataObserver = Observer<PagingData<DataMenu>> { dataMenu ->
-        showShimmerEffect()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            menuAdapter.submitData(lifecycle, dataMenu)
-            hideShimmerEffect()
-        }, DELAY)
-    }*/
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        menuViewModelDI = ViewModelProvider(requireActivity())[MenuViewModelDI::class.java]
-    }*/
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         userPreferences = UserPreferences(requireContext())
 
-        //val userDatabase = UserDatabase.getUserDataBase(requireContext())
-        //val userDao = userDatabase.userDao()
-        //homeViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(userDao))[HomeViewModel::class.java]
+        checkUser()
 
-        //checkUser()
+        homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
 
-        //homeViewModel.isListView.value = userPreferences.getLayoutPreferences()
+        homeViewModel.isListView.observe(viewLifecycleOwner) {
+            toggleLayout()
+        }
 
-        //menuAdapter = MenuAdapter(listener = this)
-
-        //menuAdapterDI = MenuAdapterDI(listener = this)
+        categoryAdapterDI = CategoryAdapterDI { requestMenuByCategory(it.lowercase()) }
+        menuAdapterDI = MenuAdapterDI(listener = this)
 
         binding.rvVertical.setHasFixedSize(true)
         binding.rvHorizontal.setHasFixedSize(true)
-        //getListMenu()
-
-        //menuViewModel.getListMenu().observe(viewLifecycleOwner, menuDataObserver)
-
-
-        /*getMenuCategory()
-
-        menuViewModel.menuCategory.observe(viewLifecycleOwner) {
-            setCategory(it)
-            hideShimmerCategory()
-        }*/
-
-        /*menuViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }*/
-
-        /*homeViewModel.isListView.observe(viewLifecycleOwner) {
-            toggleLayout()
-        }*/
 
         setupRecyclerView()
         readDataMenu()
         readDataCategory()
-
-        //showAllMenu()
+        showAllMenu()
         onBackPressed()
         settingActivity()
 
@@ -232,51 +186,41 @@ class HomeFragment : Fragment(),
         }
     }
 
-    private fun setCategory(listCategory: List<DataCategory>?) {
-        binding.rvHorizontal.layoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        val categoryAdapter = listCategory?.let { dataCategories ->
-            MenuCategoryAdapter(dataCategories) {
-                getMenuByCategory(it.lowercase())
-            }
-        }
-        binding.rvHorizontal.adapter = categoryAdapter
-    }
+    private fun requestMenuByCategory(category: String) {
+        Log.d("Call api", "menu by category api called")
+        showShimmerEffect()
+        menuViewModelDI.getMenuByCategory(category)
+        menuViewModelDI.listMenuByCategoryResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    response.data?.let { menuAdapterDI.setData(it) }
+                }
 
-    private fun checkUser() {
-        homeViewModel.getUserByEmail()
-        homeViewModel.userLiveData.observe(viewLifecycleOwner) {
-            binding.tvUsername.text = it.userName.uppercase()
-        }
-    }
+                is NetworkResult.Error -> {
+                    hideShimmerEffect()
+                    loadMenuFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-    private fun getMenuByCategory(category: String) {
-        menuViewModel.getMenuByCategory(category).observe(viewLifecycleOwner) { dataMenu ->
-            showShimmerEffect()
-            if (dataMenu != null) {
-                hideShimmerEffect()
-                menuAdapter.submitData(lifecycle, dataMenu)
-            }
-        }
-    }
-
-    private fun getMenuCategory() {
-        menuViewModel.getMenuCategories()
-    }
-
-    private fun showAllMenu() {
-        binding.ivAll.setOnClickListener {
-            binding.rvVertical.adapter = menuAdapter
-
-            menuViewModel.getListMenu().observe(viewLifecycleOwner) { dataMenu ->
-                if (dataMenu != null) {
-                    menuAdapter.submitData(lifecycle, dataMenu)
+                is NetworkResult.Loading -> {
+                    showShimmerEffect()
                 }
             }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    private fun showAllMenu() {
+        binding.ivAll.setOnClickListener {
+            menuAdapterDI.clearData()
+            readDataMenu()
+        }
+    }
+
     private fun toggleRecyclerViewLayout(isListView: Boolean) {
 
         if (isListView) {
@@ -293,15 +237,15 @@ class HomeFragment : Fragment(),
     private fun showGrid() {
         binding.rvVertical.layoutManager =
             GridLayoutManager(requireActivity(), 2)
-        menuAdapter.isGridMode = true
-        binding.rvVertical.adapter = menuAdapter
+        menuAdapterDI.isGridMode = true
+        binding.rvVertical.adapter = menuAdapterDI
     }
 
     private fun showLinear() {
         binding.rvVertical.layoutManager =
             LinearLayoutManager(requireActivity())
-        menuAdapter.isGridMode = false
-        binding.rvVertical.adapter = menuAdapter
+        menuAdapterDI.isGridMode = false
+        binding.rvVertical.adapter = menuAdapterDI
     }
 
     private fun showShimmerEffect() {
@@ -363,27 +307,16 @@ class HomeFragment : Fragment(),
     }
 
     override fun onItemClick(data: DataMenu) {
+        Log.d("Item clicked", "Menu Item clicked")
         val bundle = bundleOf("item" to data)
         findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            showShimmerCategory()
-        } else {
-            hideShimmerCategory()
+    private fun checkUser() {
+        homeViewModel.getUserByEmail()
+        homeViewModel.userLiveData.observe(viewLifecycleOwner) {
+            binding.tvUsername.text = it.userName.uppercase()
         }
     }
-
-    /*override fun onDestroyView() {
-        super.onDestroyView()
-
-        menuViewModel.getListMenu().removeObserver(menuDataObserver)
-    }*/
-
-    companion object {
-        const val DELAY = 1000L
-    }
-
 
 }

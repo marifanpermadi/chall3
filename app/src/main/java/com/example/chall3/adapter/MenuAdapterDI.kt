@@ -68,4 +68,11 @@ class MenuAdapterDI(
 
     }
 
+    fun clearData() {
+        val diffCallback = MenuDiffUtil(menu, emptyList())
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        menu = emptyList()
+        diffResult.dispatchUpdatesTo(this)
+    }
+
 }

@@ -14,11 +14,11 @@ import com.example.chall3.data.apimodel.DataCategory
 import com.example.chall3.utils.MenuDiffUtil
 
 class CategoryAdapterDI(
-    //private val listCategory: List<DataCategory>,
     private val onCategoryClickListener: ((String) -> Unit)? = null
 ) : RecyclerView.Adapter<CategoryAdapterDI.MyViewHolder>() {
 
     private var category = emptyList<DataCategory>()
+    private var selectedCategory: String ?= null
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgPhoto: ImageView = itemView.findViewById(R.id.iv_food)
@@ -47,7 +47,8 @@ class CategoryAdapterDI(
         holder.bind(currentCategory)
 
         holder.itemView.setOnClickListener {
-            onCategoryClickListener?.invoke(currentCategory.nama)
+            selectedCategory = currentCategory.nama
+            onCategoryClickListener?.invoke(selectedCategory!!)
         }
     }
 

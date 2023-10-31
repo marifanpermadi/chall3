@@ -28,7 +28,6 @@ class MenuViewModelDI @Inject constructor(
 ) : AndroidViewModel(application) {
 
     /** ROOM DATABASE**/
-
     val readMenu: LiveData<List<Menu>> = repository.local.readMenu().asLiveData()
     val readCategory: LiveData<List<Category>> = repository.local.readCategory().asLiveData()
 
@@ -45,7 +44,10 @@ class MenuViewModelDI @Inject constructor(
 
     /** RETROFIT **/
     var listMenuResponse: MutableLiveData<NetworkResult<ListMenuResponse>> = MutableLiveData()
+    var listMenuByCategoryResponse: MutableLiveData<NetworkResult<ListMenuResponse>> =
+        MutableLiveData()
     var categoryResponse: MutableLiveData<NetworkResult<CategoryResponse>> = MutableLiveData()
+
 
     //==============================================MENU==============================================//
     fun getListMenu() = viewModelScope.launch {
@@ -97,6 +99,27 @@ class MenuViewModelDI @Inject constructor(
         }
     }
 
+
+    //=======================================MENU BY CATEGORY=======================================//
+    fun getMenuByCategory(category: String) = viewModelScope.launch {
+        getMenuByCategorySafeCall(category)
+    }
+
+    private suspend fun getMenuByCategorySafeCall(category: String) {
+        if (hasInternetConnection()) {
+            try {
+                val response = repository.remote.getMenuByCategory(category)
+                listMenuByCategoryResponse.value = handleListMenuResponse(response)
+
+            } catch (e: Exception) {
+                listMenuByCategoryResponse.value = NetworkResult.Error("Error: $e")
+
+            }
+        } else {
+            listMenuByCategoryResponse.value = NetworkResult.Error("No Internet Connection")
+        }
+    }
+
     //=======================================CATEGORY=======================================//
     fun getCategory() = viewModelScope.launch {
         getCategorySafeCall()
@@ -126,7 +149,7 @@ class MenuViewModelDI @Inject constructor(
         insertCategory(category)
     }
 
-    private fun handleCategoryResponse(response: Response<CategoryResponse>): NetworkResult<CategoryResponse>? {
+    private fun handleCategoryResponse(response: Response<CategoryResponse>): NetworkResult<CategoryResponse> {
         when {
             response.message().toString().contains("timeout") -> {
                 return NetworkResult.Error("Timeout")
