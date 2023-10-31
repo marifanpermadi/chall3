@@ -18,7 +18,7 @@ class CategoryAdapterDI(
 ) : RecyclerView.Adapter<CategoryAdapterDI.MyViewHolder>() {
 
     private var category = emptyList<DataCategory>()
-    private var selectedCategory: String ?= null
+    private var selectedCategory: String? = null
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgPhoto: ImageView = itemView.findViewById(R.id.iv_food)

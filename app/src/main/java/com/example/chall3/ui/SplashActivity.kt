@@ -3,22 +3,23 @@ package com.example.chall3.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.chall3.R
 import com.example.chall3.ui.login.LoginActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.chall3.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +27,8 @@ class SplashActivity : AppCompatActivity() {
 
         setupView()
 
-        auth = Firebase.auth
-
         Handler(Looper.getMainLooper()).postDelayed({
-
-            val user = Firebase.auth.currentUser
+            val user = homeViewModel.getUser()
             if (user != null) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -38,7 +36,6 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this,LoginActivity::class.java))
                 finish()
             }
-
         }, DELAY_TIME)
     }
 

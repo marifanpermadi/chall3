@@ -22,4 +22,8 @@ class HomeViewModel @Inject constructor(
         val email = repository.remote.getCurrentUser()
         userLiveData = email?.let { repository.local.getUser(it) }!!
     }
+
+    fun getUser(): String? {
+        return repository.remote.getCurrentUser()
+    }
 }

@@ -50,7 +50,8 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is Result.Success -> {
                     Toast.makeText(
-                        this@LoginActivity, getString(R.string.login_succed), Toast.LENGTH_SHORT)
+                        this@LoginActivity, getString(R.string.login_succed), Toast.LENGTH_SHORT
+                    )
                         .show()
 
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
@@ -80,13 +81,15 @@ class LoginActivity : AppCompatActivity() {
         val passwordEt = binding.etPassword!!
         val btLogin = binding.btLogin!!
 
-        emailEt.addTextChangedListener(object: TextWatcher {
+        emailEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
+
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
+
             @Suppress("DEPRECATION")
             override fun afterTextChanged(s: Editable?) {
                 if (emailEt.emailValid() && passwordEt.isPasswordValid()) {
@@ -103,8 +106,10 @@ class LoginActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             @Suppress("DEPRECATION")
             override fun afterTextChanged(p0: Editable?) {
                 if (emailEt.emailValid() && passwordEt.isPasswordValid()) {

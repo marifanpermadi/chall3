@@ -41,7 +41,7 @@ class LocalDataSource @Inject constructor(
         userDao.insert(user)
     }
 
-    fun getUser(email: String) : LiveData<User> {
+    fun getUser(email: String): LiveData<User> {
         return userDao.getUser(email)
     }
 
@@ -50,7 +50,7 @@ class LocalDataSource @Inject constructor(
         cartDao.insert(cartItem)
     }
 
-    fun getAllCartItems() : LiveData<List<Cart>> {
+    fun getAllCartItems(): LiveData<List<Cart>> {
         return cartDao.getAllCartItems()
     }
 

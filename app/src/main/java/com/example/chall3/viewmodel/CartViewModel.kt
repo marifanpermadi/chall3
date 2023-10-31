@@ -39,19 +39,19 @@ class CartViewModel @Inject constructor(
     val isLoading: LiveData<Boolean> = _isLoading
 
     fun deleteCartItemById(cartId: Long) {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.local.deleteById(cartId)
         }
     }
 
     private fun deleteAllItems() {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.local.deleteAllItems()
         }
     }
 
     fun updateCart(cart: Cart) {
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.local.updateCart(cart)
             _cartItemLiveData.postValue(cart)
         }
@@ -61,6 +61,7 @@ class CartViewModel @Inject constructor(
     fun placeOrder(orderRequest: OrderRequest) = viewModelScope.launch {
         placeOrderSafeCall(orderRequest)
     }
+
     private suspend fun placeOrderSafeCall(orderRequest: OrderRequest) {
 
         _isLoading.value = true
@@ -99,7 +100,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun calculateTotalPrice() : LiveData<Int> {
+    private fun calculateTotalPrice(): LiveData<Int> {
         return repository.local.getAllCartItems().map { cartItems ->
             var total = 0
             for (cartItem in cartItems) {

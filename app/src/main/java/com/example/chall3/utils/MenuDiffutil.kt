@@ -2,10 +2,10 @@ package com.example.chall3.utils
 
 import androidx.recyclerview.widget.DiffUtil
 
-class MenuDiffUtil<T> (
+class MenuDiffUtil<T>(
     private val oldList: List<T>,
     private val newList: List<T>
-): DiffUtil.Callback() {
+) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }

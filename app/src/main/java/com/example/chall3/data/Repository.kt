@@ -1,6 +1,5 @@
 package com.example.chall3.data
 
-import com.example.chall3.utils.SettingPreferences
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

@@ -4,7 +4,6 @@ import com.example.chall3.data.apimodel.CategoryResponse
 import com.example.chall3.data.apimodel.ListMenuResponse
 import com.example.chall3.data.apimodel.OrderRequest
 import com.example.chall3.data.apimodel.OrderResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -13,24 +12,6 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("listmenu")
-    suspend fun getListMenu(): ListMenuResponse
-
-    @GET("listmenu")
-    suspend fun getMenuByCategory(
-        @Query("c") category: String
-    ): ListMenuResponse
-
-    @GET("category")
-    fun getCategory(): Call<CategoryResponse>
-
-    @POST("order")
-    fun placeOrder(
-        @Body orderRequest: OrderRequest
-    ): Call<OrderResponse>
-
-
-    /** WITH DI **/
     @GET("listmenu")
     suspend fun getListMenuDI(): Response<ListMenuResponse>
 

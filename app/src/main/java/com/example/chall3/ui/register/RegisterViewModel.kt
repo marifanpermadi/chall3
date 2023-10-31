@@ -28,9 +28,11 @@ class RegisterViewModel @Inject constructor(
                 when (val result = repository.remote.registerUser(email, password)) {
                     is Result.Success -> {
                         _registerResult.value = Result.Success(Unit)
-                        val user = User(email = email, userName = userName, phoneNumber = phoneNumber)
+                        val user =
+                            User(email = email, userName = userName, phoneNumber = phoneNumber)
                         insertUser(user)
                     }
+
                     is Result.Error -> {
                         _registerResult.value = Result.Error(result.exception)
                     }
@@ -42,6 +44,6 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun insertUser(user: User) {
-       repository.local.insertUser(user)
+        repository.local.insertUser(user)
     }
 }

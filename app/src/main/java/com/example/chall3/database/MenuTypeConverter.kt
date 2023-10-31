@@ -1,7 +1,6 @@
 package com.example.chall3.database
 
 import androidx.room.TypeConverter
-import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.data.apimodel.ListMenuResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
