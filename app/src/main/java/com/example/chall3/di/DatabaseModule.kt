@@ -2,6 +2,7 @@ package com.example.chall3.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.chall3.database.cart.CartDataBase
 import com.example.chall3.database.category.CategoryDatabase
 import com.example.chall3.database.menu.MenuDatabase
 import com.example.chall3.database.users.UserDatabase
@@ -15,6 +16,21 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
+
+    /** CART DATABASE **/
+    @Singleton
+    @Provides
+    fun provideCartDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,
+        CartDataBase::class.java,
+        "cart_database"
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideCartDao(cartDataBase: CartDataBase) = cartDataBase.cartDao()
 
 
     /** USER DATABASE **/

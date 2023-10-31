@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.chall3.R
@@ -17,16 +17,16 @@ import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.databinding.FragmentDetailBinding
 import com.example.chall3.viewmodel.DetailViewModel
 import com.example.chall3.viewmodel.HomeViewModel
-import com.example.chall3.viewmodelfactory.SharedViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
 
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var detailViewModel: DetailViewModel
+    private val homeViewModel: HomeViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels()
 
     private var item: DataMenu? = null
 
@@ -36,20 +36,11 @@ class DetailFragment : Fragment() {
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
 
-        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        setUpDetailViewModel()
-
         homeViewModel.isListView.value = true
 
-        detailViewModel.orderNote.observe(viewLifecycleOwner) { }
-
-        detailViewModel.currentAmount.observe(viewLifecycleOwner) { newAmount ->
-            binding.tvNumber.text = newAmount.toString()
-        }
-
-        detailViewModel.totalPrice.observe(viewLifecycleOwner) { newTotalPrice ->
-            binding.tvTotal.text = newTotalPrice.toString()
-        }
+        observeTotalPrice()
+        observeCurrentAmount()
+        observeNote()
 
         setData()
         seeOnMaps()
@@ -60,6 +51,22 @@ class DetailFragment : Fragment() {
         addToCart()
 
         return binding.root
+    }
+
+    private fun observeNote() {
+        detailViewModel.orderNote.observe(viewLifecycleOwner) { }
+    }
+
+    private fun observeCurrentAmount() {
+        detailViewModel.currentAmount.observe(viewLifecycleOwner) { newAmount ->
+            binding.tvNumber.text = newAmount.toString()
+        }
+    }
+
+    private fun observeTotalPrice() {
+        detailViewModel.totalPrice.observe(viewLifecycleOwner) { newTotalPrice ->
+            binding.tvTotal.text = newTotalPrice.toString()
+        }
     }
 
     private fun setData() {
@@ -138,12 +145,6 @@ class DetailFragment : Fragment() {
             detailViewModel.setOrderNote(note)
             Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun setUpDetailViewModel() {
-        val sharedViewModelFactory = SharedViewModelFactory(requireActivity().application)
-        detailViewModel =
-            ViewModelProvider(this, sharedViewModelFactory)[DetailViewModel::class.java]
     }
 
     @SuppressLint("InflateParams")

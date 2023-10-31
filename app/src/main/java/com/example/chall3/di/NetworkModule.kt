@@ -1,6 +1,7 @@
 package com.example.chall3.di
 
 import com.example.chall3.data.api.ApiService
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /** RETROFIT **/
     @Singleton
     @Provides
     fun provideHttpClient(): OkHttpClient {
@@ -47,5 +49,12 @@ object NetworkModule {
     @Provides
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    /** FIREBASE **/
+    @Singleton
+    @Provides
+    fun providesFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
     }
 }

@@ -11,17 +11,17 @@ import androidx.room.Update
 interface CartDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(cartItem: Cart)
+    suspend fun insert(cartItem: Cart)
 
     @Query("DELETE FROM cart_items")
-    fun deleteALlItems()
+    suspend fun deleteALlItems()
 
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<Cart>>
 
     @Query("DELETE FROM cart_items WHERE id = :cartId")
-    fun deleteById(cartId: Long)
+    suspend fun deleteById(cartId: Long)
 
     @Update
-    fun update(cartItem: Cart)
+    suspend fun update(cartItem: Cart)
 }

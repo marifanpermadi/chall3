@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chall3.R
 import com.example.chall3.adapter.CartAdapter
@@ -15,13 +15,15 @@ import com.example.chall3.data.apimodel.OrderRequest
 import com.example.chall3.databinding.FragmentOrderBinding
 import com.example.chall3.ui.customlayout.PaymentSuccessDialog
 import com.example.chall3.viewmodel.CartViewModel
-import com.example.chall3.viewmodelfactory.SharedViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderFragment : Fragment() {
 
     private lateinit var binding: FragmentOrderBinding
-    private lateinit var cartViewModel: CartViewModel
     private lateinit var cartAdapter: CartAdapter
+
+    private val cartViewModel: CartViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -30,31 +32,15 @@ class OrderFragment : Fragment() {
     ): View {
         binding = FragmentOrderBinding.inflate(inflater, container, false)
 
-        setUpCartViewModel()
-
         cartAdapter = CartAdapter(cartViewModel)
         binding.rvOrder.setHasFixedSize(true)
         binding.rvOrder.layoutManager = LinearLayoutManager(requireContext())
         binding.rvOrder.adapter = cartAdapter
 
-        cartViewModel.allCartItems.observe(viewLifecycleOwner) {
-            cartAdapter.setData(it)
-        }
-
-        cartViewModel.totalPrice.observe(viewLifecycleOwner) {
-            binding.tvSumTotal.text = it.toString()
-        }
-
-        cartViewModel.orderPlacedLiveData.observe(viewLifecycleOwner) {
-            if (it) {
-                val dialogFragment = PaymentSuccessDialog()
-                dialogFragment.show(childFragmentManager, "PaymentSuccessDialog")
-            }
-        }
-
-        cartViewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
+        observeTotalPrice()
+        observeOrderRequest()
+        observeLoading()
+        observeCartItems()
 
         deliveryMethod()
         paymentMethod()
@@ -63,26 +49,47 @@ class OrderFragment : Fragment() {
         return binding.root
     }
 
-    private fun setUpCartViewModel() {
-        val sharedViewModelFactory = SharedViewModelFactory(requireActivity().application)
-        cartViewModel = ViewModelProvider(this, sharedViewModelFactory)[CartViewModel::class.java]
-    }
-
     private fun payNow() {
         binding.btPay.setOnClickListener {
 
             val orderItems = cartViewModel.allCartItems.value ?: emptyList()
             if (orderItems.isNotEmpty()) {
                 val total = cartViewModel.totalPrice.value ?: 0
-                val orderRequest = OrderRequest("Uchup",total,orderItems.map {
+                val orderRequest = OrderRequest("Uchup", total, orderItems.map {
                     OrderItem(it.foodName, it.orderAmount, it.orderNote ?: "", it.foodPrice)
                 })
 
                 cartViewModel.placeOrder(orderRequest)
-
             } else {
-                Toast.makeText(requireContext(),"Your cart is empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Your cart is empty", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun observeCartItems() {
+        cartViewModel.allCartItems.observe(viewLifecycleOwner) {
+            cartAdapter.setData(it)
+        }
+    }
+
+    private fun observeTotalPrice() {
+        cartViewModel.totalPrice.observe(viewLifecycleOwner) {
+            binding.tvSumTotal.text = it.toString()
+        }
+    }
+
+    private fun observeOrderRequest() {
+        cartViewModel.orderPlacedLiveData.observe(viewLifecycleOwner) {
+            if (it.data == true) {
+                val dialogFragment = PaymentSuccessDialog()
+                dialogFragment.show(childFragmentManager, "PaymentSuccessDialog")
+            }
+        }
+    }
+
+    private fun observeLoading() {
+        cartViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
         }
     }
 

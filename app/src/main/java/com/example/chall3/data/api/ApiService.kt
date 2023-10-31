@@ -1,7 +1,6 @@
 package com.example.chall3.data.api
 
 import com.example.chall3.data.apimodel.CategoryResponse
-import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.data.apimodel.ListMenuResponse
 import com.example.chall3.data.apimodel.OrderRequest
 import com.example.chall3.data.apimodel.OrderResponse
@@ -42,5 +41,10 @@ interface ApiService {
     suspend fun getMenuByCategoryDI(
         @Query("c") category: String
     ): Response<ListMenuResponse>
+
+    @POST("order")
+    suspend fun placeOrderDI(
+        @Body orderRequest: OrderRequest
+    ) : Response<OrderResponse>
 
 }

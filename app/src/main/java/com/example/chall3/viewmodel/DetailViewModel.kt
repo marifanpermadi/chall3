@@ -1,14 +1,22 @@
 package com.example.chall3.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.chall3.data.Repository
 import com.example.chall3.data.apimodel.DataMenu
 import com.example.chall3.database.cart.Cart
-import com.example.chall3.repository.CartRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(application: Application) : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val repository: Repository,
+    application: Application
+) : AndroidViewModel(application) {
 
     private val _currentAmount = MutableLiveData(1)
     val currentAmount: LiveData<Int> = _currentAmount
@@ -21,11 +29,6 @@ class DetailViewModel(application: Application) : ViewModel() {
 
     private val _selectedItem = MutableLiveData<DataMenu>()
 
-    private val cartRepository: CartRepository
-
-    init {
-        cartRepository = CartRepository(application)
-    }
 
     fun initSelectedItem(item: DataMenu) {
         _selectedItem.value = item
@@ -58,11 +61,11 @@ class DetailViewModel(application: Application) : ViewModel() {
         return orderNote.value
     }
 
-    private fun insertCartItem(cartItem: Cart) {
-        cartRepository.insert(cartItem)
+    private suspend fun insertCartItem(cartItem: Cart) {
+        repository.local.insertCart(cartItem)
     }
 
-    fun addToCart() {
+    fun addToCart() = viewModelScope.launch {
         val selectedItem = _selectedItem.value
 
         selectedItem?.let {

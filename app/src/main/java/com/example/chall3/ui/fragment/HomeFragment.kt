@@ -35,7 +35,6 @@ class HomeFragment : Fragment(),
     private lateinit var binding: FragmentHomeBinding
     private lateinit var userPreferences: UserPreferences
 
-    //private val menuAdapterDI by lazy { MenuAdapterDI() }
     private lateinit var menuAdapterDI: MenuAdapterDI
     private lateinit var categoryAdapterDI: CategoryAdapterDI
 

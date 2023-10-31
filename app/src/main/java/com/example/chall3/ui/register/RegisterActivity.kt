@@ -4,31 +4,26 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.chall3.R
-import com.example.chall3.database.users.User
-import com.example.chall3.database.users.UserDatabase
 import com.example.chall3.databinding.ActivityRegisterBinding
 import com.example.chall3.ui.login.LoginActivity
 import com.example.chall3.utils.Result
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var registerViewModel: RegisterViewModel
+
+    private val registerViewModel: RegisterViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        registerViewModel =
-            ViewModelProvider(this, RegisterViewModelFactory())[RegisterViewModel::class.java]
 
         registerUser()
     }
@@ -46,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register(email: String, password: String, userName: String, phoneNumber: String) {
 
-        registerViewModel.register(email, password)
+        registerViewModel.register(email, password, userName, phoneNumber)
         showLoading(true)
 
         registerViewModel.registerResult.observe(this@RegisterActivity) {
@@ -57,8 +52,6 @@ class RegisterActivity : AppCompatActivity() {
                         this@RegisterActivity,
                         getString(R.string.register_succed), Toast.LENGTH_SHORT
                     ).show()
-
-                    //insertUserIntoDatabase(email, userName, phoneNumber)
 
                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     startActivity(intent)
@@ -73,15 +66,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
-
-    /*private fun insertUserIntoDatabase(email: String, userName: String, phoneNumber: String) {
-        val user = User(email = email, userName = userName, phoneNumber = phoneNumber)
-        val userDao = UserDatabase.getUserDataBase(this).userDao()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            userDao.insert(user)
-        }
-    }*/
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

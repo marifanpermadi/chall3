@@ -1,31 +1,32 @@
 package com.example.chall3.ui.login
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.chall3.R
 import com.example.chall3.databinding.ActivityLoginBinding
 import com.example.chall3.ui.MainActivity
 import com.example.chall3.ui.register.RegisterActivity
 import com.example.chall3.utils.Result
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
         isDataValid()
         loginUser()

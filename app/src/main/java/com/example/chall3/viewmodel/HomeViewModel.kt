@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.chall3.data.Repository
 import com.example.chall3.database.users.User
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,8 +19,7 @@ class HomeViewModel @Inject constructor(
     var userLiveData: LiveData<User> = MutableLiveData()
 
     fun getUserByEmail() {
-        val user = Firebase.auth.currentUser
-        val userEmail = user?.email
-        userLiveData = userEmail?.let { repository.local.getUser(it) }!!
+        val email = repository.remote.getCurrentUser()
+        userLiveData = email?.let { repository.local.getUser(it) }!!
     }
 }

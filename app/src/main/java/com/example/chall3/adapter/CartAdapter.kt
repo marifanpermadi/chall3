@@ -68,7 +68,6 @@ class CartAdapter(
         val btPlus: Button = itemView.findViewById(R.id.bt_plus)
         val btMin: Button = itemView.findViewById(R.id.bt_min)
         val tvNumber: TextView = itemView.findViewById(R.id.tv_number)
-        //val tvPrice: TextView = itemView.findViewById(R.id.tv_price)
 
         fun bind(cartItem: Cart) {
 
