@@ -26,4 +26,5 @@ class HomeViewModel @Inject constructor(
     fun getUser(): String? {
         return repository.remote.getCurrentUser()
     }
+
 }

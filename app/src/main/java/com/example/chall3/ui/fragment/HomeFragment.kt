@@ -314,7 +314,11 @@ class HomeFragment : Fragment(),
     private fun checkUser() {
         homeViewModel.getUserByEmail()
         homeViewModel.userLiveData.observe(viewLifecycleOwner) {
-            binding.tvUsername.text = it.userName.uppercase()
+            if (it != null) {
+                binding.tvUsername.text = it.userName.uppercase()
+            } else {
+                binding.tvUsername.text = "Binarian"
+            }
         }
     }
 

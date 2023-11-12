@@ -40,9 +40,17 @@ class ProfileFragment : Fragment() {
     private fun checkUser() {
         homeViewModel.getUserByEmail()
         homeViewModel.userLiveData.observe(viewLifecycleOwner) {
-            binding.userName.text = it.userName
-            binding.email.text = it.email
-            binding.phone.text = it.phoneNumber
+            if (it != null) {
+                binding.userName.text = it.userName
+                binding.email.text = it.email
+                binding.phone.text = it.phoneNumber
+            } else {
+                val email = homeViewModel.getUser()
+                binding.userName.text = email
+                binding.email.text = email
+                binding.phone.text = "+62"
+            }
+
         }
     }
 

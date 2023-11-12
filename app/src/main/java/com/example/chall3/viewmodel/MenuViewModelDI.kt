@@ -109,7 +109,7 @@ class MenuViewModelDI @Inject constructor(
         if (hasInternetConnection()) {
             try {
                 val response = repository.remote.getMenuByCategory(category)
-                listMenuByCategoryResponse.value = handleListMenuResponse(response)
+                listMenuByCategoryResponse.postValue(handleListMenuResponse(response))
 
             } catch (e: Exception) {
                 listMenuByCategoryResponse.value = NetworkResult.Error("Error: $e")
